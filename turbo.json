@@ -1,0 +1,54 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV",
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_API_TOKEN",
+    "D1_DATABASE_NAME"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "type-check": {
+      "dependsOn": ["^build"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "@nyuchi/database#db:generate": {
+      "outputs": ["migrations/**"],
+      "cache": false
+    },
+    "@nyuchi/database#supabase:start": {
+      "outputs": [],
+      "cache": false
+    },
+    "@nyuchi/database#d1:migrate": {
+      "dependsOn": ["@nyuchi/database#db:generate"],
+      "outputs": [],
+      "cache": false
+    },
+    "@nyuchi/database#seed": {
+      "dependsOn": ["@nyuchi/database#d1:migrate"],
+      "outputs": [],
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Products - Nyuchi Platform">
+  <Header />
+  
+  <main class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Nyuchi Platform Products
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          A comprehensive suite of AI-powered productivity tools designed to streamline your workflow and boost efficiency.
+        </p>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <!-- Mail Organizer -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Mail Organizer</h3>
+            <p class="text-gray-600 mb-4">
+              AI-powered email management with smart categorization, summaries, and intelligent filtering.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• Smart email categorization</li>
+              <li>• AI-powered summaries</li>
+              <li>• Priority inbox</li>
+              <li>• Gmail integration</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/mail-organizer" class="btn btn-primary text-sm">Learn More</a>
+              <a href="/extension" class="btn btn-secondary text-sm">Install</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO Manager -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">SEO Manager</h3>
+            <p class="text-gray-600 mb-4">
+              Automated WordPress SEO optimization with AI-powered recommendations and bulk updates.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• AI optimization</li>
+              <li>• WordPress integration</li>
+              <li>• Bulk updates</li>
+              <li>• Performance monitoring</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/seo-manager" class="btn btn-primary text-sm">Learn More</a>
+              <a href="/dashboard" class="btn btn-secondary text-sm">Try Free</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics Pro -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Analytics Pro</h3>
+            <p class="text-gray-600 mb-4">
+              Advanced business analytics with real-time insights, custom dashboards, and data exports.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• Real-time analytics</li>
+              <li>• Custom dashboards</li>
+              <li>• Data exports</li>
+              <li>• Team collaboration</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/analytics-pro" class="btn btn-primary text-sm">Learn More</a>
+              <a href="/dashboard" class="btn btn-secondary text-sm">Try Free</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel Platform -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Travel Platform</h3>
+            <p class="text-gray-600 mb-4">
+              Community-driven travel platform with business directory and local recommendations.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• Business submissions</li>
+              <li>• Community reviews</li>
+              <li>• Travel guides</li>
+              <li>• Interactive maps</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/travel-platform" class="btn btn-primary text-sm">Learn More</a>
+              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Always Free</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Hub -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Content Hub</h3>
+            <p class="text-gray-600 mb-4">
+              Multi-platform content management with AI generation and team collaboration.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• Multi-platform sync</li>
+              <li>• Content calendar</li>
+              <li>• AI generation</li>
+              <li>• Team collaboration</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/content-hub" class="btn btn-primary text-sm">Learn More</a>
+              <a href="/dashboard" class="btn btn-secondary text-sm">Try Free</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Widget -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-8">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Event Widget</h3>
+            <p class="text-gray-600 mb-4">
+              Event management system with RSVP tracking, notifications, and calendar integration.
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• Event creation</li>
+              <li>• RSVP management</li>
+              <li>• Notifications</li>
+              <li>• Calendar integration</li>
+            </ul>
+            <div class="flex space-x-3">
+              <a href="/event-widget" class="btn btn-primary text-sm">Learn More</a>
+              <a href="/dashboard" class="btn btn-secondary text-sm">Try Free</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-blue-600 rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Ready to Get Started?
+        </h2>
+        <p class="text-xl text-blue-100 mb-8">
+          Join thousands of users who have transformed their workflow with Nyuchi Platform.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/dashboard" class="btn bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4">
+            Start Free Trial
+          </a>
+          <a href="/mail-organizer" class="btn bg-transparent text-white border-2 border-white hover:bg-white hover:text-blue-600 text-lg px-8 py-4">
+            Try Mail Organizer
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

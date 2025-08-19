@@ -1,0 +1,358 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Analytics Pro - Advanced Business Analytics & Insights">
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-purple-50 to-indigo-100 py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            Turn Data into <span class="text-purple-600">Actionable Insights</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto">
+            Advanced business analytics with real-time dashboards, custom reports, and AI-powered insights. 
+            Make data-driven decisions with confidence.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/dashboard" class="btn btn-primary text-lg px-8 py-4">
+              Start Free Trial
+            </a>
+            <a href="#demo" class="btn btn-secondary text-lg px-8 py-4">
+              View Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Powerful Analytics Features
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Everything you need to understand your business performance
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Real-time Analytics</h3>
+            <p class="text-gray-600">
+              Monitor your business metrics in real-time with live dashboards and instant updates.
+            </p>
+          </div>
+
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Custom Dashboards</h3>
+            <p class="text-gray-600">
+              Build personalized dashboards with drag-and-drop widgets tailored to your needs.
+            </p>
+          </div>
+
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Data Exports</h3>
+            <p class="text-gray-600">
+              Export your data in multiple formats including CSV, PDF, and Excel for further analysis.
+            </p>
+          </div>
+
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Team Collaboration</h3>
+            <p class="text-gray-600">
+              Share dashboards and reports with your team, set permissions, and collaborate on insights.
+            </p>
+          </div>
+
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM9 17H4l5 5v-5zM9 7H4l5-5v5zM15 7h5l-5-5v5z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">API Access</h3>
+            <p class="text-gray-600">
+              Connect your existing tools and databases with our comprehensive REST API.
+            </p>
+          </div>
+
+          <div class="text-center p-8">
+            <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">AI Insights</h3>
+            <p class="text-gray-600">
+              Get intelligent recommendations and automated insights powered by machine learning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section id="demo" class="py-24 bg-gray-50">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Beautiful, Intuitive Dashboards
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            See your data come to life with our modern dashboard interface
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-2xl p-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                Key Features
+              </h3>
+              <ul class="space-y-4">
+                <li class="flex items-start">
+                  <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Interactive Charts</h4>
+                    <p class="text-gray-600">Drill down into your data with interactive visualizations</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Smart Alerts</h4>
+                    <p class="text-gray-600">Get notified when important metrics change</p>
+                  </div>
+                </li>
+                <li class="flex items-start">
+                  <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Mobile Responsive</h4>
+                    <p class="text-gray-600">Access your analytics on any device, anywhere</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-gradient-to-br from-purple-100 to-indigo-100 rounded-lg p-8">
+              <div class="space-y-4">
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">Revenue</span>
+                    <span class="text-sm text-green-600">+12%</span>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-900">$24,563</div>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">Users</span>
+                    <span class="text-sm text-green-600">+8%</span>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-900">1,429</div>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">Conversion</span>
+                    <span class="text-sm text-red-600">-2%</span>
+                  </div>
+                  <div class="text-2xl font-bold text-gray-900">3.2%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Simple, Scalable Pricing
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Choose the plan that grows with your business
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Free Plan -->
+          <div class="bg-white border-2 border-gray-200 rounded-lg p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Free</h3>
+            <div class="mb-6">
+              <span class="text-4xl font-bold text-gray-900">$0</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                1,000 data points/month
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Basic dashboards
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Simple analytics
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                100 API calls/month
+              </li>
+            </ul>
+            <a href="/dashboard" class="btn btn-secondary w-full">Get Started</a>
+          </div>
+
+          <!-- Pro Plan -->
+          <div class="bg-white border-2 border-purple-500 rounded-lg p-8 relative">
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">Popular</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Pro</h3>
+            <div class="mb-6">
+              <span class="text-4xl font-bold text-gray-900">$49</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                10,000 data points/month
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Custom dashboards
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Real-time analytics
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Data exports
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                1,000 API calls/month
+              </li>
+            </ul>
+            <a href="/dashboard" class="btn btn-primary w-full">Start Trial</a>
+          </div>
+
+          <!-- Business Plan -->
+          <div class="bg-white border-2 border-gray-200 rounded-lg p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Business</h3>
+            <div class="mb-6">
+              <span class="text-4xl font-bold text-gray-900">$149</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                100,000 data points/month
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Advanced reporting
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Team collaboration
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                API access
+              </li>
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                10,000 API calls/month
+              </li>
+            </ul>
+            <a href="/dashboard" class="btn btn-primary w-full">Start Trial</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-purple-600">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold text-white mb-4">
+          Start Making Data-Driven Decisions Today
+        </h2>
+        <p class="text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
+          Join thousands of businesses who trust Analytics Pro for their data insights and reporting needs.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/dashboard" class="btn bg-white text-purple-600 hover:bg-gray-100 text-lg px-8 py-4">
+            Start Free Trial
+          </a>
+          <a href="/products" class="btn bg-transparent text-white border-2 border-white hover:bg-white hover:text-purple-600 text-lg px-8 py-4">
+            View All Products
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

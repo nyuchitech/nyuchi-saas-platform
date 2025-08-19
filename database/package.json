@@ -1,0 +1,29 @@
+{
+  "name": "@nyuchi/database",
+  "version": "1.0.0",
+  "description": "Unified database configuration for Nyuchi Platform",
+  "main": "index.js",
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:reset": "supabase db reset",
+    "supabase:migrate": "supabase migration up",
+    "supabase:deploy": "supabase db push",
+    "d1:migrate": "wrangler d1 migrations apply nyuchi-platform-db",
+    "d1:local": "wrangler d1 migrations apply nyuchi-platform-db --local",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "drizzle-orm": "^0.29.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0"
+  }
+}

@@ -1,0 +1,64 @@
+name = "nyuchi-platform"
+main = "dist/_worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "nyuchi-platform-prod"
+route = "api.nyuchi.com/*"
+zone_id = "your-zone-id"
+
+[env.staging]
+name = "nyuchi-platform-staging"
+route = "staging.api.nyuchi.com/*"
+zone_id = "your-zone-id"
+
+# D1 Database for application data (following Cloudflare SaaS template)
+[[d1_databases]]
+binding = "DB"
+database_name = "nyuchi-platform-db"
+database_id = "your-d1-database-id"
+migrations_dir = "database/migrations/d1"
+
+# Environment variables
+[vars]
+# Supabase configuration
+SUPABASE_URL = "your-supabase-url"
+SUPABASE_ANON_KEY = "your-supabase-anon-key"
+SUPABASE_SERVICE_ROLE_KEY = "your-supabase-service-role-key" 
+SUPABASE_JWT_SECRET = "your-supabase-jwt-secret"
+SUPABASE_BUCKET_NAME = "nyuchi-storage"
+
+# Cloudflare configuration
+CLOUDFLARE_ACCOUNT_ID = "your-cloudflare-account-id"
+CLOUDFLARE_API_TOKEN = "your-cloudflare-api-token"
+D1_DATABASE_NAME = "nyuchi-platform-db"
+
+# Application configuration
+ENVIRONMENT = "development"
+NODE_ENV = "development"
+
+# Feature flags
+ENABLE_D1_BACKUP = "false"
+ENABLE_SUPABASE_FUNCTIONS = "true"
+ENABLE_REPLICATION = "false"
+
+# Product-specific API keys
+MAIL_ORGANIZER_API_KEY = "your-mail-organizer-api-key"
+SEO_MANAGER_API_KEY = "your-seo-manager-api-key"
+ANALYTICS_PRO_API_KEY = "your-analytics-pro-api-key"
+
+# External service integrations
+GMAIL_CLIENT_ID = "your-gmail-client-id"
+GMAIL_CLIENT_SECRET = "your-gmail-client-secret"
+WORDPRESS_API_BASE = "your-wordpress-api-base"
+
+# Production overrides
+[env.production.vars]
+ENVIRONMENT = "production"
+NODE_ENV = "production"
+ENABLE_D1_BACKUP = "true"
+
+# Staging overrides
+[env.staging.vars]
+ENVIRONMENT = "staging"
+NODE_ENV = "staging"
