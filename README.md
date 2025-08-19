@@ -52,7 +52,7 @@ Nyuchi Platform is a **secure, enterprise-grade SaaS ecosystem** featuring **Mai
 ## 📦 Secure Project Structure
 
 ```
-Mail-Organizer/
+nyuchi-saas-platform/
 ├── src/                           # Astro Application Source
 │   ├── pages/                    # Routes & Secure API endpoints
 │   │   ├── api/                  # Validated APIs with RBAC
