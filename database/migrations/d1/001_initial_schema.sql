@@ -1,5 +1,5 @@
 -- D1 Database Schema for Nyuchi Platform Application Data
--- This handles Mail Organizer, SEO Manager, Analytics, etc.
+-- This handles MailSense, SEO Manager, Analytics, etc.
 -- User profiles remain in Supabase
 
 -- =====================================================
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- =====================================================
--- MAIL ORGANIZER TABLES
+-- MAILSENSE TABLES
 -- =====================================================
 
 -- Mail accounts connected by users
@@ -293,7 +293,7 @@ CREATE INDEX IF NOT EXISTS idx_users_org ON users(organization_id);
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);
 
--- Mail Organizer indexes
+-- MailSense indexes
 CREATE INDEX IF NOT EXISTS idx_mail_accounts_org ON mail_accounts(organization_id);
 CREATE INDEX IF NOT EXISTS idx_mail_accounts_user ON mail_accounts(user_id);
 CREATE INDEX IF NOT EXISTS idx_mail_messages_account ON mail_messages(account_id);

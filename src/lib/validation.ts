@@ -18,6 +18,19 @@ export const UserStatusSchema = z.enum(['active', 'inactive', 'suspended']);
 // Organization validation
 export const OrganizationNameSchema = z.string().min(1).max(100).regex(/^[a-zA-Z0-9\s\-_\.]+$/, 'Invalid organization name');
 
+export const OrganizationSchema = z.object({
+  name: OrganizationNameSchema,
+  description: z.string().max(500).optional(),
+  plan_type: z.enum(['free', 'pro', 'business', 'enterprise']).default('free')
+});
+
+export const OrganizationUpdateSchema = z.object({
+  organization_id: z.string().min(1),
+  name: OrganizationNameSchema.optional(),
+  description: z.string().max(500).optional(),
+  settings: z.record(z.any()).optional()
+});
+
 // API request validation
 export const PaginationSchema = z.object({
   page: z.number().int().min(1).max(1000).default(1),

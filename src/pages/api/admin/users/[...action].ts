@@ -1,13 +1,15 @@
 import type { APIRoute } from 'astro';
 import { requireAdmin, requireSuperAdmin, hasPermission, canManageUser, createCustomerError, createSuccessResponse, ROLE_HIERARCHY, type UserRole } from '../../../../lib/auth';
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const prerender = false;
+
+export const POST: APIRoute = async ({ request, locals, params }) => {
   try {
-    const { action } = locals.params;
+    const { action } = params;
     const body = await request.json();
     
     // Get D1 database from Cloudflare environment
-    const db = locals.runtime?.env?.DB;
+    const db = locals.runtime?.env?.D1_DATABASE;
     
     if (!db) {
       return createCustomerError('Service temporarily unavailable. Please try again later.', 503);
@@ -134,7 +136,7 @@ async function createUser(request: Request, db: any, data: any) {
     
     // Validate role hierarchy
     if (admin.role !== 'super_admin') {
-      if (ROLE_HIERARCHY[role] >= ROLE_HIERARCHY[admin.role]) {
+      if (ROLE_HIERARCHY[role as UserRole] >= ROLE_HIERARCHY[admin.role]) {
         return createCustomerError('Cannot create user with equal or higher role level.');
       }
       
@@ -156,7 +158,7 @@ async function createUser(request: Request, db: any, data: any) {
     
   } catch (error) {
     console.error('Create user error:', error);
-    if (error.message.includes('UNIQUE constraint')) {
+    if (error instanceof Error && error.message.includes('UNIQUE constraint')) {
       return createCustomerError('A user with this email already exists.');
     }
     return createCustomerError('Failed to create user. Please try again.');
@@ -203,7 +205,7 @@ async function updateUser(request: Request, db: any, data: any) {
     
     if (role && role !== targetUser.role) {
       // Validate role hierarchy
-      if (admin.role !== 'super_admin' && ROLE_HIERARCHY[role] >= ROLE_HIERARCHY[admin.role]) {
+      if (admin.role !== 'super_admin' && ROLE_HIERARCHY[role as UserRole] >= ROLE_HIERARCHY[admin.role]) {
         return createCustomerError('Cannot assign equal or higher role level.');
       }
       updates.push('role = ?');
@@ -345,7 +347,7 @@ async function assignRole(request: Request, db: any, data: any) {
     }
     
     // Validate role hierarchy
-    if (admin.role !== 'super_admin' && ROLE_HIERARCHY[role] >= ROLE_HIERARCHY[admin.role]) {
+    if (admin.role !== 'super_admin' && ROLE_HIERARCHY[role as UserRole] >= ROLE_HIERARCHY[admin.role]) {
       return createCustomerError('Cannot assign equal or higher role level.');
     }
     

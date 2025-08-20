@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MailSense</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .tagline {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .feature h3 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .feature p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .getting-started {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .getting-started h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .steps {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .step-number {
+            background: #1a73e8;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+        
+        .step-content p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 115, 232, 0.3);
+        }
+        
+        .btn.secondary {
+            background: #6c757d;
+        }
+        
+        .ai-setup {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #90caf9;
+        }
+        
+        .ai-setup h2 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-setup p {
+            color: #1976d2;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .provider-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .provider {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e3f2fd;
+            transition: border-color 0.2s ease;
+        }
+        
+        .provider:hover {
+            border-color: #1a73e8;
+        }
+        
+        .provider h4 {
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+        
+        .provider p {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 40px;
+        }
+        
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-card">
+            <div class="header">
+                <div class="logo">🧠</div>
+                <h1>Welcome to MailSense</h1>
+                <p>Your AI-Powered Email Intelligence Platform</p>
+                <div class="tagline">Making email make sense</div>
+            </div>
+            
+            <div class="content">
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📁</div>
+                        <h3>Smart Tabs</h3>
+                        <p>Organize Gmail with intelligent tabs that learn from your email patterns and adapt to your workflow.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Intelligence</h3>
+                        <p>Automatic categorization, priority detection, and smart summaries powered by advanced AI.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <h3>Instant Insights</h3>
+                        <p>Get newsletter summaries, cleanup suggestions, and email analytics at your fingertips.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Zero Effort</h3>
+                        <p>MailSense works automatically in the background, organizing emails as they arrive.</p>
+                    </div>
+                </div>
+                
+                <div class="getting-started">
+                    <h2>🚀 Getting Started with MailSense</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Open Gmail</h4>
+                                <p>Navigate to <strong>mail.google.com</strong> to see your new MailSense interface at the top of the page.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Connect Your AI (Optional)</h4>
+                                <p>Enable AI features by adding your API key for intelligent email processing and insights.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Customize Your Tabs</h4>
+                                <p>Create tabs for your specific needs - drag to reorder, double-click to edit in edit mode.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Let MailSense Work</h4>
+                                <p>Sit back as MailSense automatically organizes, prioritizes, and provides insights on your emails.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-setup">
+                    <h2>🤖 AI Setup</h2>
+                    <p>Enable AI features by choosing a provider and adding your API key. AI features include automatic labeling, newsletter detection, priority assessment, and smart summaries.</p>
+                    
+                    <div class="provider-options">
+                        <div class="provider">
+                            <h4>OpenAI</h4>
+                            <p>GPT-3.5/4 models<br>Get key at platform.openai.com</p>
+                        </div>
+                        
+                        <div class="provider">
+                            <h4>Anthropic</h4>
+                            <p>Claude models<br>Get key at console.anthropic.com</p>
+                        </div>
+                        
+                        <div class="provider">
+                            <h4>Google</h4>
+                            <p>Gemini models<br>Get key at makersuite.google.com</p>
+                        </div>
+                        
+                        <div class="provider">
+                            <h4>Custom</h4>
+                            <p>Your own endpoint<br>OpenAI-compatible API</p>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Note:</strong> Your API key is stored locally and never shared. AI features are optional and the extension works great without them.</p>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn" onclick="openGmail()">Launch MailSense in Gmail</button>
+                    <button class="btn secondary" onclick="openSettings()">Configure Settings</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>
+                <strong>MailSense</strong> v2.1.0 | Making email make sense™<br>
+                <a href="#" onclick="openSettings()">Settings</a> | 
+                <a href="https://mailsense.ai" target="_blank">Website</a> | 
+                <a href="#" onclick="openSupport()">Support</a>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function openGmail() {
+            chrome.tabs.create({ url: 'https://mail.google.com' });
+            window.close();
+        }
+        
+        function openSettings() {
+            chrome.runtime.openOptionsPage();
+            window.close();
+        }
+        
+        function openSupport() {
+            chrome.tabs.create({ url: 'https://mailsense.ai/support' });
+            window.close();
+        }
+        
+        // Auto-open Gmail after 10 seconds if user doesn't interact
+        let autoOpenTimer = setTimeout(openGmail, 10000);
+        
+        // Cancel auto-open if user interacts with page
+        document.addEventListener('click', () => {
+            clearTimeout(autoOpenTimer);
+        });
+        
+        document.addEventListener('scroll', () => {
+            clearTimeout(autoOpenTimer);
+        });
+    </script>
+</body>
+</html>

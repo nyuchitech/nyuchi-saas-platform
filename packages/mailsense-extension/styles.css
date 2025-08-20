@@ -1,0 +1,220 @@
+/* MailSense Extension Styles */
+
+/* Hide original Gmail styles that might interfere */
+.gb_9c {
+    transition: margin-top 0.3s ease !important;
+}
+
+/* Enhanced email list styling */
+.zA {
+    transition: all 0.2s ease !important;
+    border-radius: 4px !important;
+    margin: 2px 0 !important;
+}
+
+.zA:hover {
+    background-color: rgba(26, 115, 232, 0.05) !important;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.1) !important;
+}
+
+/* AI indicator styles */
+.ai-indicator {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    display: flex !important;
+    gap: 4px !important;
+    z-index: 100 !important;
+    font-family: 'Google Sans', sans-serif !important;
+    pointer-events: none !important;
+}
+
+.ai-indicator span {
+    font-size: 12px !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    display: inline-block !important;
+    pointer-events: auto !important;
+}
+
+/* Tab animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.gmail-tab {
+    animation: slideIn 0.3s ease !important;
+}
+
+/* Notification styles */
+.ai-notification {
+    position: fixed !important;
+    top: 52px !important;
+    right: 24px !important;
+    padding: 12px 16px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-family: 'Google Sans', sans-serif !important;
+    z-index: 10001 !important;
+    max-width: 250px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.ai-notification.success {
+    background: #d4edda !important;
+    color: #155724 !important;
+    border: 1px solid #c3e6cb !important;
+}
+
+.ai-notification.error {
+    background: #f8d7da !important;
+    color: #721c24 !important;
+    border: 1px solid #f5c6cb !important;
+}
+
+.ai-notification.info {
+    background: #d1ecf1 !important;
+    color: #0c5460 !important;
+    border: 1px solid #bee5eb !important;
+}
+
+/* Enhanced button styles */
+button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 20000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+/* Enhanced form styles */
+input:focus, select:focus, textarea:focus {
+    outline: none !important;
+    border-color: #1a73e8 !important;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2) !important;
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: relative !important;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip) !important;
+    position: absolute !important;
+    bottom: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease !important;
+    z-index: 10002 !important;
+}
+
+.tooltip:hover::after {
+    opacity: 1 !important;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    border: 2px solid #f3f3f3 !important;
+    border-top: 2px solid #1a73e8 !important;
+    border-radius: 50% !important;
+    width: 16px !important;
+    height: 16px !important;
+    animation: spin 1s linear infinite !important;
+    display: inline-block !important;
+    margin-left: 8px !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    #gmail-tabs-container {
+        padding: 0 16px !important;
+    }
+    
+    .gmail-tab {
+        padding: 6px 12px !important;
+        font-size: 13px !important;
+    }
+    
+    .gmail-tab .tab-name {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #gmail-tabs-container {
+        height: 44px !important;
+        padding: 0 12px !important;
+    }
+    
+    .gmail-tab {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+        gap: 4px !important;
+    }
+    
+    #gmail-add-tab-btn,
+    #gmail-ai-summary-btn {
+        display: none !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    #gmail-tabs-container {
+        background: linear-gradient(135deg, #1f1f1f 0%, #2d2d2d 100%) !important;
+        border-bottom-color: #3c4043 !important;
+    }
+    
+    .gmail-tab {
+        color: #e8eaed !important;
+    }
+    
+    .gmail-tab.active {
+        color: #8ab4f8 !important;
+        border-bottom-color: #8ab4f8 !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    #gmail-tabs-container {
+        display: none !important;
+    }
+    
+    body {
+        padding-top: 0 !important;
+    }
+}

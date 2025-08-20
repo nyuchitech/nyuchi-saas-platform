@@ -28,7 +28,7 @@ export const organizations = sqliteTable('organizations', {
   updatedAt: text('updated_at').notNull().default(sql`datetime('now')`)
 });
 
-// Mail Organizer - Email accounts
+// MailSense - Email accounts
 export const mailAccounts = sqliteTable('mail_accounts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   organizationId: text('organization_id').notNull(),
@@ -44,7 +44,7 @@ export const mailAccounts = sqliteTable('mail_accounts', {
   updatedAt: text('updated_at').notNull().default(sql`datetime('now')`)
 });
 
-// Mail Organizer - Email messages
+// MailSense - Email messages
 export const mailMessages = sqliteTable('mail_messages', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   accountId: integer('account_id').notNull(),
@@ -64,7 +64,7 @@ export const mailMessages = sqliteTable('mail_messages', {
   createdAt: text('created_at').notNull().default(sql`datetime('now')`)
 });
 
-// Mail Organizer - Categories
+// MailSense - Categories
 export const mailCategories = sqliteTable('mail_categories', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   organizationId: text('organization_id').notNull(),

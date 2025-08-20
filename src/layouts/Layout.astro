@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title: string;
   description?: string;
@@ -38,7 +40,7 @@ const { title, description = "Nyuchi Platform - Mail Organizer & SaaS Solutions"
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
-  <body class="font-sans antialiased">
+  <body class="font-sans antialiased bg-gray-50">
     <slot />
   </body>
 </html>

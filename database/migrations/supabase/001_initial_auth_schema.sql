@@ -52,7 +52,7 @@ CREATE TABLE public.profiles (
 -- Platform products/services
 CREATE TABLE public.products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    slug TEXT UNIQUE NOT NULL, -- 'mail-organizer', 'seo-manager', 'analytics-pro', etc.
+    slug TEXT UNIQUE NOT NULL, -- 'mailsense', 'seo-manager', 'analytics-pro', etc.
     name TEXT NOT NULL,
     description TEXT,
     icon TEXT,
@@ -440,7 +440,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Insert default products
 INSERT INTO public.products (slug, name, description, icon, status, features) VALUES
-('mail-organizer', 'Mail Organizer', 'AI-powered email management with smart categorization and summaries', '📧', 'active', '["ai_categorization", "smart_filters", "email_summaries", "multi_account"]'),
+('mailsense', 'MailSense', 'AI-powered email management with smart categorization and summaries', '📧', 'active', '["ai_categorization", "smart_filters", "email_summaries", "multi_account"]'),
 ('seo-manager', 'SEO Manager', 'Automated WordPress SEO optimization with AI recommendations', '🔍', 'active', '["wordpress_integration", "ai_seo", "bulk_optimization", "performance_tracking"]'),
 ('analytics-pro', 'Analytics Pro', 'Advanced business analytics with real-time dashboards and insights', '📊', 'active', '["real_time_analytics", "custom_dashboards", "data_export", "advanced_filters"]'),
 ('travel-platform', 'Travel Platform', 'Community-driven travel platform with business directory and reviews', '✈️', 'active', '["business_directory", "reviews", "community_submissions", "travel_guides"]'),

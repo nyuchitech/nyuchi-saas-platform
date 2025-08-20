@@ -248,7 +248,7 @@ export function handleCorsRequest(request: Request): Response | null {
     return new Response(null, {
       status: 200,
       headers: {
-        ...createCorsHeaders(origin),
+        ...createCorsHeaders(origin || undefined),
         ...SECURITY_HEADERS
       }
     });

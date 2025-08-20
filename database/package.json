@@ -18,12 +18,12 @@
     "seed": "node scripts/seed.js"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0",
-    "drizzle-orm": "^0.29.0"
+    "@supabase/supabase-js": "^2.46.4",
+    "drizzle-orm": "^0.44.4"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.0",
-    "@types/node": "^20.0.0",
-    "tsx": "^4.0.0"
+    "drizzle-kit": "^0.31.4",
+    "@types/node": "^20.19.11",
+    "tsx": "^4.19.2"
   }
 }

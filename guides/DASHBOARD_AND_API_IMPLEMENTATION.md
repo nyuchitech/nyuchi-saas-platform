@@ -10,7 +10,7 @@
   - Recent activity feed
   - Real-time data loading with customer-friendly error handling
 
-### **📧 Mail Organizer Dashboard** (`/dashboard/mail-organizer`)
+### **📧 MailSense Dashboard** (`/dashboard/mailsense`)
 - **Features**:
   - Email statistics (Total, Processed Today, Categories, Time Saved)
   - Connected email accounts management
@@ -27,14 +27,14 @@
 - **Token Verification**: JWT token validation with Supabase integration
 - **Role-based Access**: Admin vs. User role separation
 
-### **📧 Mail Organizer API** (`/api/mail-organizer/[...action]`)
+### **📧 MailSense API** (`/api/mailsense/[...action]`)
 **Customer Endpoints:**
-- `POST /api/mail-organizer/sync-account` - Connect email accounts
-- `POST /api/mail-organizer/categorize` - AI email categorization
-- `POST /api/mail-organizer/summarize` - Generate email summaries
-- `POST /api/mail-organizer/get-messages` - Retrieve email messages
-- `POST /api/mail-organizer/apply-filter` - Apply smart filters
-- `POST /api/mail-organizer/create-category` - Create custom categories
+- `POST /api/mailsense/sync-account` - Connect email accounts
+- `POST /api/mailsense/categorize` - AI email categorization
+- `POST /api/mailsense/summarize` - Generate email summaries
+- `POST /api/mailsense/get-messages` - Retrieve email messages
+- `POST /api/mailsense/apply-filter` - Apply smart filters
+- `POST /api/mailsense/create-category` - Create custom categories
 
 ### **🔍 SEO Manager API** (`/api/seo-manager/[...action]`)
 **Customer Endpoints:**
@@ -155,8 +155,8 @@
 
 ### **Customer API Call**
 ```javascript
-// Mail Organizer: Sync email account
-fetch('/api/mail-organizer/sync-account', {
+// MailSense: Sync email account
+fetch('/api/mailsense/sync-account', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer user-jwt-token',

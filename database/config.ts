@@ -30,10 +30,10 @@ function isValidUrl(string: string): boolean {
 export const DATABASE_CONFIG = {
   // Supabase Configuration
   supabase: {
-    url: getEnvVar('SUPABASE_URL', 'http://localhost:54321', process.env.NODE_ENV === 'production'),
-    anonKey: getEnvVar('SUPABASE_ANON_KEY', '', process.env.NODE_ENV === 'production'),
-    serviceKey: getEnvVar('SUPABASE_SERVICE_ROLE_KEY', '', process.env.NODE_ENV === 'production'),
-    jwtSecret: getEnvVar('SUPABASE_JWT_SECRET', '', process.env.NODE_ENV === 'production'),
+    url: getEnvVar('SUPABASE_URL', 'http://localhost:54321', false),
+    anonKey: getEnvVar('SUPABASE_ANON_KEY', '', false),
+    serviceKey: getEnvVar('SUPABASE_SERVICE_ROLE_KEY', '', false),
+    jwtSecret: getEnvVar('SUPABASE_JWT_SECRET', '', false),
     bucketName: getEnvVar('SUPABASE_BUCKET_NAME', 'nyuchi-storage')
   },
   
@@ -52,7 +52,7 @@ export const DATABASE_CONFIG = {
   
   // Security settings
   security: {
-    jwtSecret: getEnvVar('JWT_SECRET', '', true),
+    jwtSecret: getEnvVar('JWT_SECRET', '', false),
     apiSecretKey: getEnvVar('API_SECRET_KEY', ''),
     encryptionKey: getEnvVar('ENCRYPTION_KEY', ''),
     rateLimitEnabled: getEnvVar('RATE_LIMIT_ENABLED', 'true') === 'true',
@@ -97,11 +97,11 @@ export const DATABASE_CONFIG = {
 };
 
 // Drizzle configuration for D1
-export const drizzleConfig: Config = {
+export const drizzleConfig = {
   schema: './database/schema/index.ts',
   out: './database/migrations/d1',
-  dialect: 'sqlite',
-  driver: 'cloudflare-d1'
+  dialect: 'sqlite' as const,
+  driver: 'cloudflare-d1' as const
 };
 
 // Supabase configuration for Drizzle

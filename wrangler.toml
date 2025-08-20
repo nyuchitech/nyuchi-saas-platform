@@ -16,7 +16,7 @@ zone_id = "your-zone-id"
 [[d1_databases]]
 binding = "DB"
 database_name = "nyuchi-platform-db"
-database_id = "your-d1-database-id"
+database_id = "49a06c1c-05c0-408b-b8f7-5835a89b0d4c"
 migrations_dir = "database/migrations/d1"
 
 # Environment variables

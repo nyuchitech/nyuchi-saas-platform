@@ -46,7 +46,7 @@ Mail-Organizer/
 │   ├── migrations/                # Database migrations
 │   └── config.ts                  # Secure environment config
 ├── packages/                       # Shared packages and extensions
-│   ├── gmail-tabs-extension/      # Chrome extension
+│   ├── mailsense-extension/      # Chrome extension
 │   ├── ui/                        # UI components
 │   └── wordpress-plugin/          # WordPress integration
 ├── env.example                     # Environment template (SECURE)

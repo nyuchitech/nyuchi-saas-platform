@@ -1,8 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 import { DATABASE_CONFIG } from '../config';
 
+// Build-safe Supabase client initialization
+const createSupabaseClient = (url: string, key: string, options: any) => {
+  // During build time, use placeholder values to prevent errors
+  const safeUrl = url || 'https://placeholder.supabase.co';
+  const safeKey = key || 'placeholder-key';
+  
+  return createClient(safeUrl, safeKey, options);
+};
+
 // Supabase client for server-side operations
-export const supabaseAdmin = createClient(
+export const supabaseAdmin = createSupabaseClient(
   DATABASE_CONFIG.supabase.url,
   DATABASE_CONFIG.supabase.serviceKey,
   {
@@ -14,7 +23,7 @@ export const supabaseAdmin = createClient(
 );
 
 // Supabase client for client-side operations
-export const supabaseClient = createClient(
+export const supabaseClient = createSupabaseClient(
   DATABASE_CONFIG.supabase.url,
   DATABASE_CONFIG.supabase.anonKey,
   {
@@ -24,6 +33,13 @@ export const supabaseClient = createClient(
     }
   }
 );
+
+// Runtime check for valid configuration
+const isSupabaseConfigured = () => {
+  return DATABASE_CONFIG.supabase.url !== 'http://localhost:54321' && 
+         DATABASE_CONFIG.supabase.anonKey !== '' &&
+         DATABASE_CONFIG.supabase.serviceKey !== '';
+};
 
 // User management functions
 export class SupabaseUserManager {

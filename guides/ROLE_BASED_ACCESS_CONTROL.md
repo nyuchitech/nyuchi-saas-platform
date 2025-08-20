@@ -43,9 +43,9 @@ The platform implements a **5-tier role hierarchy** with clear access levels:
 #### **Product-Specific Permissions**
 
 **Mail Organizer:**
-- `mail_organizer.use` - Basic email management
-- `mail_organizer.admin` - Administrative functions
-- `mail_organizer.settings` - Modify settings/categories
+- `mailsense.use` - Basic email management
+- `mailsense.admin` - Administrative functions
+- `mailsense.settings` - Modify settings/categories
 
 **SEO Manager:**
 - `seo_manager.use` - Basic SEO optimization
@@ -73,7 +73,7 @@ const adminResult = await requireAdmin(request);
 const superAdminResult = await requireSuperAdmin(request);
 
 // Specific permission required
-const userResult = await requirePermission(request, 'mail_organizer.use');
+const userResult = await requirePermission(request, 'mailsense.use');
 
 // Minimum role level required
 const managerResult = await requireRole(request, 'manager');
@@ -83,7 +83,7 @@ const managerResult = await requireRole(request, 'manager');
 
 ```typescript
 // Check specific permission
-hasPermission(user, 'mail_organizer.use')
+hasPermission(user, 'mailsense.use')
 
 // Check product access
 canAccessProduct(user, PRODUCT_PERMISSIONS.MAIL_ORGANIZER.USE)
@@ -129,13 +129,13 @@ POST /api/admin/users/delete
 
 #### **Product Endpoints with RBAC**
 ```typescript
-// Mail Organizer (requires mail_organizer.use)
-POST /api/mail-organizer/sync-account
-POST /api/mail-organizer/categorize
-POST /api/mail-organizer/get-messages
+// Mail Organizer (requires mailsense.use)
+POST /api/mailsense/sync-account
+POST /api/mailsense/categorize
+POST /api/mailsense/get-messages
 
 // Special permission for settings
-POST /api/mail-organizer/create-category (requires mail_organizer.settings)
+POST /api/mailsense/create-category (requires mailsense.settings)
 
 // SEO Manager (requires seo_manager.use)
 POST /api/seo-manager/connect-site
@@ -209,7 +209,7 @@ fetch('/api/admin/users/create', {
   body: JSON.stringify({
     email: 'newuser@company.com',
     role: 'user',
-    initial_permissions: ['mail_organizer.use']
+    initial_permissions: ['mailsense.use']
   })
 });
 ```
@@ -217,7 +217,7 @@ fetch('/api/admin/users/create', {
 #### **Checking Mail Organizer Access**
 ```javascript
 // User tries to access Mail Organizer
-fetch('/api/mail-organizer/sync-account', {
+fetch('/api/mailsense/sync-account', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer user-token',
@@ -228,7 +228,7 @@ fetch('/api/mail-organizer/sync-account', {
     provider: 'gmail'
   })
 });
-// ✅ Success if user has 'mail_organizer.use' permission
+// ✅ Success if user has 'mailsense.use' permission
 // ❌ 403 error if user lacks permission
 ```
 

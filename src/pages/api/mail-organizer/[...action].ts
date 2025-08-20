@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+
+export const prerender = false;
 import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../lib/auth';
 import { 
   validateRequest, 
@@ -10,7 +12,7 @@ import {
   validateJsonSize
 } from '../../../lib/validation';
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request, locals, params }) => {
   try {
     // Verify user authentication
     const authResult = await requireAuth(request);
@@ -19,7 +21,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     const user = authResult;
-    const { action } = locals.params;
+    const { action } = params;
     
     // Validate request size and parse JSON
     let body;
@@ -41,11 +43,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
     
     // Check product access permission
     if (!hasPermission(user, PRODUCT_PERMISSIONS.MAIL_ORGANIZER.USE)) {
-      return createCustomerError('You don\'t have access to Mail Organizer. Please contact your administrator.', 403);
+  return createCustomerError('You don\'t have access to MailSense. Please contact your administrator.', 403);
     }
     
     // Get D1 database from Cloudflare environment
-    const db = locals.runtime?.env?.DB;
+    const db = locals.runtime?.env?.D1_DATABASE;
     
     if (!db) {
       return createCustomerError('Service temporarily unavailable. Please try again later.', 503);
@@ -57,9 +59,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
       case 'categorize':
         return await categorizeEmail(db, body, user);
       case 'summarize':
-        return await summarizeEmail(db, body, user);
+        return await summarizeEmail(db, body);
       case 'get-messages':
-        return await getEmailMessages(db, body, user);
+        return await getEmailMessages(db, body);
       case 'apply-filter':
         return await applyEmailFilter(db, body, user);
       case 'create-category':
@@ -72,7 +74,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         return createCustomerError('Invalid action requested.');
     }
   } catch (error) {
-    console.error('Mail Organizer API error:', error);
+  console.error('MailSense API error:', error);
     
     // Return response with security headers
     const response = createCustomerError('Something went wrong. Please try again later.', 500);
@@ -148,13 +150,13 @@ async function summarizeEmail(db: any, data: any) {
   const { content } = data;
   
   // Simple summary generation (would be replaced with actual AI)
-  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 10);
+  const sentences = content.split(/[.!?]+/).filter((s: string) => s.trim().length > 10);
   const summary = sentences.slice(0, 2).join('. ') + '.';
   
   return new Response(JSON.stringify({
     success: true,
     summary,
-    key_points: sentences.slice(0, 3).map(s => s.trim()),
+    key_points: sentences.slice(0, 3).map((s: string) => s.trim()),
     word_count: content.split(/\s+/).length
   }), {
     headers: { 'Content-Type': 'application/json' }
@@ -217,7 +219,7 @@ async function createCategory(db: any, data: any, user: any) {
     return createSuccessResponse(result, 'Category created successfully.');
   } catch (error) {
     console.error('Create category error:', error);
-    if (error.message.includes('UNIQUE constraint')) {
+    if (error instanceof Error && error.message.includes('UNIQUE constraint')) {
       return createCustomerError('A category with this name already exists.');
     }
     return createCustomerError('Failed to create category. Please try again.');

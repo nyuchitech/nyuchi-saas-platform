@@ -65,8 +65,8 @@ export class DatabaseManager {
   // Health check for both databases
   async healthCheck() {
     const results = {
-      d1: { status: 'unknown', latency: 0, error: null },
-      supabase: { status: 'unknown', latency: 0, error: null }
+      d1: { status: 'unknown' as string, latency: 0, error: null as string | null },
+      supabase: { status: 'unknown' as string, latency: 0, error: null as string | null }
     };
     
     // Test D1
@@ -78,7 +78,7 @@ export class DatabaseManager {
         results.d1.status = 'healthy';
       } catch (error) {
         results.d1.status = 'error';
-        results.d1.error = error.message;
+        results.d1.error = error instanceof Error ? error.message : 'Unknown error';
       }
     } else {
       results.d1.status = 'not_initialized';
@@ -93,7 +93,7 @@ export class DatabaseManager {
       if (error) results.supabase.error = error.message;
     } catch (error) {
       results.supabase.status = 'error';
-      results.supabase.error = error.message;
+      results.supabase.error = error instanceof Error ? error.message : 'Unknown error';
     }
     
     return results;

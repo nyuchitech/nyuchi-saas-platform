@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
   }
   
   const admin = adminResult;
-  const db = locals.runtime?.env?.DB;
+  const db = locals.runtime?.env?.D1_DATABASE;
 
   try {
     let systemStats = {

@@ -1,7 +1,9 @@
 import type { APIRoute } from 'astro';
 import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../lib/auth';
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const prerender = false;
+
+export const POST: APIRoute = async ({ request, locals, params }) => {
   try {
     // Verify user authentication
     const authResult = await requireAuth(request);
@@ -10,7 +12,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     const user = authResult;
-    const { action } = locals.params;
+    const { action } = params;
     const body = await request.json();
     
     // Check product access permission
@@ -19,7 +21,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     // Get D1 database from Cloudflare environment
-    const db = locals.runtime?.env?.DB;
+    const db = locals.runtime?.env?.D1_DATABASE;
     
     if (!db) {
       return createCustomerError('Service temporarily unavailable. Please try again later.', 503);
@@ -110,11 +112,11 @@ async function getAnalytics(db: any, data: any, user: any) {
     
     // Mock additional analytics data
     const summary = {
-      total_events: analytics.results.reduce((sum, row) => sum + row.count, 0),
-      unique_event_types: [...new Set(analytics.results.map(row => row.event_type))].length,
+      total_events: analytics.results.reduce((sum: number, row: any) => sum + row.count, 0),
+      unique_event_types: [...new Set(analytics.results.map((row: any) => row.event_type))].length,
       date_range: { from: date_from, to: date_to },
       top_events: analytics.results
-        .reduce((acc, row) => {
+        .reduce((acc: any, row: any) => {
           acc[row.event_type] = (acc[row.event_type] || 0) + row.count;
           return acc;
         }, {})
@@ -169,7 +171,7 @@ async function exportData(db: any, data: any, user: any) {
       id: Date.now().toString(),
       format,
       status: 'processing',
-      download_url: null,
+      download_url: null as string | null,
       expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours
       created_at: new Date().toISOString()
     };

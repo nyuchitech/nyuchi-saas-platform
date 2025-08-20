@@ -1,7 +1,9 @@
 import type { APIRoute } from 'astro';
+
+export const prerender = false;
 import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../lib/auth';
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request, locals, params }) => {
   try {
     // Verify user authentication
     const authResult = await requireAuth(request);
@@ -10,7 +12,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     const user = authResult;
-    const { action } = locals.params;
+    const { action } = params;
     const body = await request.json();
     
     // Check product access permission
@@ -19,7 +21,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     // Get D1 database from Cloudflare environment
-    const db = locals.runtime?.env?.DB;
+    const db = locals.runtime?.env?.D1_DATABASE;
     
     if (!db) {
       return createCustomerError('Service temporarily unavailable. Please try again later.', 503);

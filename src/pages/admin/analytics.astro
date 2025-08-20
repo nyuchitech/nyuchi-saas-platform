@@ -1,0 +1,602 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+---
+
+<Layout title="System Analytics - Admin Dashboard">
+  <Header />
+  
+  <main class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Dashboard Header -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">System Analytics</h1>
+            <p class="text-gray-600">Comprehensive platform performance and usage analytics</p>
+          </div>
+          <div class="flex space-x-3">
+            <button onclick="refreshAnalytics()" class="btn btn-secondary">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Refresh
+            </button>
+            <button onclick="exportReport()" class="btn btn-primary">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Export Report
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Performance Indicators -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div id="kpi-cards" class="contents">
+          <!-- KPI cards will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Charts Row 1: Organizations and Users -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Organization Growth -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-gray-900">Organization Growth</h3>
+              <select id="org-growth-period" onchange="updateOrgGrowthChart()" class="form-select text-sm">
+                <option value="30d">Last 30 days</option>
+                <option value="90d">Last 90 days</option>
+                <option value="1y">Last year</option>
+              </select>
+            </div>
+            <div id="org-growth-chart" class="h-64">
+              <!-- Chart will be rendered here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- User Statistics -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">User Distribution</h3>
+            <div id="user-stats" class="space-y-4">
+              <!-- User stats will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row 2: Product Usage and Revenue -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Product Usage -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Product Usage</h3>
+            <div id="product-usage-stats" class="space-y-4">
+              <!-- Product usage will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Analytics -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Revenue Analytics</h3>
+            <div id="revenue-stats">
+              <!-- Revenue stats will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Metrics -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-gray-900 mb-6">System Performance</h3>
+          <div id="performance-metrics" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Performance metrics will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Tables -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Plan Distribution -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Plan Distribution</h3>
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Organizations</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="plan-distribution-table" class="bg-white divide-y divide-gray-200">
+                  <!-- Plan distribution will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Growth Trends -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Growth Trends</h3>
+            <div id="growth-trends" class="space-y-4">
+              <!-- Growth trends will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Modal for System Issues -->
+    <div id="alert-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-gray-900">System Alert</h3>
+            </div>
+            
+            <div id="alert-content">
+              <!-- Alert content will be loaded here -->
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+              <button onclick="hideAlert()" class="btn btn-primary">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let analyticsData = null;
+
+    // Load analytics data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAnalytics();
+      
+      // Set up auto-refresh every 5 minutes
+      setInterval(refreshAnalytics, 300000);
+    });
+
+    async function loadAnalytics() {
+      try {
+        const response = await fetch('/api/admin/analytics', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          analyticsData = data.data;
+          displayAnalytics(analyticsData);
+          checkSystemHealth(analyticsData);
+        } else {
+          alert('Failed to load analytics data');
+        }
+      } catch (error) {
+        alert('Error loading analytics data');
+      }
+    }
+
+    function displayAnalytics(data) {
+      displayKPICards(data);
+      displayUserStats(data.users);
+      displayProductUsage(data.products);
+      displayRevenueStats(data.revenue);
+      displayPerformanceMetrics(data.performance);
+      displayPlanDistribution(data.revenue.by_plan);
+      displayGrowthTrends(data.growth);
+    }
+
+    function displayKPICards(data) {
+      const container = document.getElementById('kpi-cards');
+      if (!container) return;
+      
+      const kpis = [
+        {
+          title: 'Total Organizations',
+          value: data.organizations.total.toLocaleString(),
+          change: data.growth.organizations.monthly_growth_rate,
+          changeType: parseFloat(data.growth.organizations.monthly_growth_rate) >= 0 ? 'increase' : 'decrease',
+          icon: 'building'
+        },
+        {
+          title: 'Active Users',
+          value: data.users.active.toLocaleString(),
+          change: data.users.engagement_rate,
+          changeType: 'percentage',
+          icon: 'users'
+        },
+        {
+          title: 'Monthly Recurring Revenue',
+          value: `$${data.revenue.mrr.toLocaleString()}`,
+          change: data.revenue.mrr_growth_rate,
+          changeType: parseFloat(data.revenue.mrr_growth_rate) >= 0 ? 'increase' : 'decrease',
+          icon: 'currency'
+        },
+        {
+          title: 'System Uptime',
+          value: `${data.performance.uptime.current_month}%`,
+          change: data.performance.uptime.current_month >= 99.9 ? 'excellent' : 'good',
+          changeType: 'status',
+          icon: 'chart'
+        }
+      ];
+
+      container.innerHTML = kpis.map(kpi => {
+        const iconSvg = getIconSvg(kpi.icon);
+        const changeColor = getChangeColor(kpi.changeType, kpi.change);
+        const changeText = getChangeText(kpi.changeType, kpi.change);
+
+        return `
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                ${iconSvg}
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-gray-600">${kpi.title}</p>
+                <p class="text-2xl font-bold text-gray-900">${kpi.value}</p>
+                <p class="text-sm ${changeColor}">${changeText}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function displayUserStats(userStats) {
+      const container = document.getElementById('user-stats');
+      if (!container) return;
+      
+      container.innerHTML = `
+        <div class="grid grid-cols-2 gap-4">
+          <div class="text-center">
+            <p class="text-2xl font-bold text-blue-600">${userStats.total.toLocaleString()}</p>
+            <p class="text-sm text-gray-600">Total Users</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold text-green-600">${userStats.active.toLocaleString()}</p>
+            <p class="text-sm text-gray-600">Active Users</p>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h4 class="font-medium text-gray-900 mb-2">User Roles</h4>
+          <div class="space-y-2">
+            ${userStats.by_role.map(role => {
+              const percentage = (role.count / userStats.total * 100).toFixed(1);
+              return `
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-600 capitalize">${role.role}</span>
+                  <div class="flex items-center">
+                    <span class="text-sm font-medium text-gray-900 mr-2">${role.count}</span>
+                    <div class="w-16 bg-gray-200 rounded-full h-2">
+                      <div class="bg-blue-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function displayProductUsage(productStats) {
+      const container = document.getElementById('product-usage-stats');
+      if (!container) return;
+      
+      const products = [
+        {
+          name: 'Mail Organizer',
+          organizations: productStats.mail_organizer.active_organizations,
+          metric: `${productStats.mail_organizer.total_accounts} accounts`,
+          color: 'blue'
+        },
+        {
+          name: 'SEO Manager',
+          organizations: productStats.seo_manager.active_organizations,
+          metric: `${productStats.seo_manager.total_sites} sites`,
+          color: 'green'
+        },
+        {
+          name: 'Analytics Pro',
+          organizations: productStats.analytics_pro.active_organizations,
+          metric: `${productStats.analytics_pro.total_events_30d.toLocaleString()} events`,
+          color: 'purple'
+        },
+        {
+          name: 'Content Hub',
+          organizations: productStats.content_hub.active_organizations,
+          metric: `${productStats.content_hub.total_content} content items`,
+          color: 'yellow'
+        }
+      ];
+
+      container.innerHTML = products.map(product => `
+        <div class="border border-gray-200 rounded-lg p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h5 class="font-medium text-gray-900">${product.name}</h5>
+            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-${product.color}-100 text-${product.color}-800">
+              ${product.organizations} orgs
+            </span>
+          </div>
+          <p class="text-sm text-gray-600">${product.metric}</p>
+        </div>
+      `).join('');
+    }
+
+    function displayRevenueStats(revenueStats) {
+      const container = document.getElementById('revenue-stats');
+      if (!container) return;
+      
+      container.innerHTML = `
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="text-center">
+            <p class="text-2xl font-bold text-green-600">$${revenueStats.mrr.toLocaleString()}</p>
+            <p class="text-sm text-gray-600">MRR</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold text-blue-600">$${revenueStats.arr.toLocaleString()}</p>
+            <p class="text-sm text-gray-600">ARR</p>
+          </div>
+        </div>
+        
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">ARPU</span>
+            <span class="text-sm font-medium">$${revenueStats.metrics.average_revenue_per_user}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">CLV</span>
+            <span class="text-sm font-medium">$${revenueStats.metrics.customer_lifetime_value}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-gray-600">Churn Rate</span>
+            <span class="text-sm font-medium">${revenueStats.metrics.churn_rate}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function displayPerformanceMetrics(performanceStats) {
+      const container = document.getElementById('performance-metrics');
+      if (!container) return;
+      
+      const metrics = [
+        {
+          title: 'Avg Response Time',
+          value: `${performanceStats.response_time.avg_ms}ms`,
+          status: performanceStats.response_time.avg_ms < 500 ? 'good' : 'warning'
+        },
+        {
+          title: 'P95 Response Time',
+          value: `${performanceStats.response_time.p95_ms}ms`,
+          status: performanceStats.response_time.p95_ms < 1000 ? 'good' : 'warning'
+        },
+        {
+          title: 'Error Rate',
+          value: `${performanceStats.error_rate.current}%`,
+          status: performanceStats.error_rate.current < 1 ? 'good' : 'error'
+        },
+        {
+          title: 'Database Latency',
+          value: `${performanceStats.database.d1_latency_ms}ms`,
+          status: performanceStats.database.d1_latency_ms < 100 ? 'good' : 'warning'
+        }
+      ];
+
+      container.innerHTML = metrics.map(metric => {
+        const statusColor = metric.status === 'good' ? 'text-green-600' : 
+                          metric.status === 'warning' ? 'text-yellow-600' : 'text-red-600';
+        const statusBg = metric.status === 'good' ? 'bg-green-100' : 
+                        metric.status === 'warning' ? 'bg-yellow-100' : 'bg-red-100';
+
+        return `
+          <div class="text-center">
+            <div class="w-12 h-12 ${statusBg} rounded-full flex items-center justify-center mx-auto mb-2">
+              <div class="w-6 h-6 ${statusColor} font-bold text-lg">•</div>
+            </div>
+            <p class="text-lg font-bold text-gray-900">${metric.value}</p>
+            <p class="text-sm text-gray-600">${metric.title}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function displayPlanDistribution(planData) {
+      const container = document.getElementById('plan-distribution-table');
+      if (!container) return;
+      
+      const total = planData.reduce((sum, plan) => sum + plan.customers, 0);
+      
+      container.innerHTML = planData.map(plan => {
+        const percentage = total > 0 ? (plan.customers / total * 100).toFixed(1) : 0;
+        
+        return `
+          <tr>
+            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900 capitalize font-medium">
+              ${plan.plan}
+            </td>
+            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+              ${plan.customers}
+            </td>
+            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+              ${percentage}%
+            </td>
+            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+              $${plan.monthly_revenue.toLocaleString()}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function displayGrowthTrends(growthStats) {
+      const container = document.getElementById('growth-trends');
+      if (!container) return;
+      
+      container.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+            <span class="text-sm font-medium text-gray-700">Organization Growth</span>
+            <div class="flex items-center">
+              <span class="text-sm font-bold text-green-600">${growthStats.organizations.monthly_growth_rate}%</span>
+              <svg class="w-4 h-4 ml-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+            <span class="text-sm font-medium text-gray-700">User Acquisition</span>
+            <span class="text-sm text-gray-600 capitalize">${growthStats.trends.user_acquisition}</span>
+          </div>
+          
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+            <span class="text-sm font-medium text-gray-700">Churn Rate</span>
+            <span class="text-sm text-gray-900">${growthStats.trends.churn_rate}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkSystemHealth(data) {
+      const issues: string[] = [];
+      
+      // Check performance thresholds
+      if (data.performance.error_rate.current > data.performance.error_rate.threshold) {
+        issues.push(`Error rate is above threshold: ${data.performance.error_rate.current}%`);
+      }
+      
+      if (data.performance.uptime.current_month < 99.5) {
+        issues.push(`Uptime is below target: ${data.performance.uptime.current_month}%`);
+      }
+      
+      if (data.performance.response_time.avg_ms > 1000) {
+        issues.push(`Average response time is high: ${data.performance.response_time.avg_ms}ms`);
+      }
+      
+      // Show alerts if there are issues
+      if (issues.length > 0) {
+        showAlert(issues);
+      }
+    }
+
+    function showAlert(issues) {
+      const alertContent = document.getElementById('alert-content');
+      if (!alertContent) return;
+      
+      alertContent.innerHTML = `
+        <p class="text-sm text-gray-600 mb-3">System health issues detected:</p>
+        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+          ${issues.map(issue => `<li>${issue}</li>`).join('')}
+        </ul>
+      `;
+      
+      const alertModal = document.getElementById('alert-modal');
+      if (alertModal) {
+        alertModal.classList.remove('hidden');
+      }
+    }
+
+    function hideAlert() {
+      const alertModal = document.getElementById('alert-modal');
+      if (alertModal) {
+        alertModal.classList.add('hidden');
+      }
+    }
+
+    function refreshAnalytics() {
+      loadAnalytics();
+    }
+
+    function exportReport() {
+      if (analyticsData) {
+        const reportData = JSON.stringify(analyticsData, null, 2);
+        const blob = new Blob([reportData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `system-analytics-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    // Helper functions
+    function getIconSvg(iconType) {
+      const icons = {
+        building: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>',
+        users: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg>',
+        currency: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        chart: '<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>'
+      };
+      return icons[iconType] || icons.chart;
+    }
+
+    function getChangeColor(changeType, change) {
+      if (changeType === 'status') {
+        return change === 'excellent' ? 'text-green-600' : 'text-blue-600';
+      }
+      if (changeType === 'percentage') {
+        return 'text-blue-600';
+      }
+      return parseFloat(change) >= 0 ? 'text-green-600' : 'text-red-600';
+    }
+
+    function getChangeText(changeType, change) {
+      if (changeType === 'status') {
+        return change === 'excellent' ? '✓ Excellent' : '✓ Good';
+      }
+      if (changeType === 'percentage') {
+        return `${change}% engaged`;
+      }
+      const prefix = parseFloat(change) >= 0 ? '+' : '';
+      return `${prefix}${change}% this month`;
+    }
+  </script>
+
+  <style>
+    .btn {
+      @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+    }
+    
+    .btn-primary {
+      @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+    }
+    
+    .btn-secondary {
+      @apply text-gray-700 bg-white hover:bg-gray-50 border-gray-300 focus:ring-blue-500;
+    }
+    
+    .form-select {
+      @apply rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+    }
+  </style>
+</Layout>

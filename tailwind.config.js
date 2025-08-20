@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './apps/*/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './apps/*/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
     './packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}',
+    './packages/mailsense-extension/**/*.{html,js}',
   ],
   theme: {
     extend: {

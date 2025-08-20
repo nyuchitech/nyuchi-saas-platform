@@ -2,7 +2,7 @@
   "name": "nyuchi-platform",
   "type": "module",
   "version": "1.0.0",
-  "description": "Nyuchi Platform - Mail Organizer & SaaS Solutions with Astro",
+  "description": "Nyuchi Platform - MailSense & SaaS Solutions with Astro",
   "workspaces": [
     "packages/*",
     "database"
@@ -18,25 +18,47 @@
     "deploy:production": "astro build && wrangler deploy --env production",
     "db:generate": "cd database && npm run db:generate",
     "db:migrate": "cd database && npm run d1:migrate",
+    "test:connections": "node scripts/test-connections.js",
+    "setup:databases": "node scripts/setup-databases.js",
+    "setup:supabase": "node scripts/setup-supabase.js",
+    "test:supabase": "node scripts/test-supabase.js",
+    "inspect:supabase": "node scripts/inspect-supabase.js",
+    "fix:markdown": "node scripts/fix-markdown.js",
+    "fix:markdown:advanced": "node scripts/fix-markdown-advanced.js",
+    "fix:markdown:indented": "node scripts/fix-indented-code.js",
+    "supabase:login": "npx supabase login",
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
+    "supabase:status": "npx supabase status",
+    "supabase:pull": "npx supabase db pull",
+    "supabase:push": "npx supabase db push",
+    "supabase:types": "npx supabase gen types typescript --local > database/types/supabase.ts",
     "db:migrate:local": "cd database && npm run d1:local",
     "db:seed": "cd database && npm run seed",
-    "supabase:start": "cd database && npm run supabase:start",
-    "supabase:migrate": "cd database && npm run supabase:migrate"
+    "supabase:migrate": "cd database && npm run supabase:migrate",
+    "setup:env": "bash scripts/setup-env.sh",
+    "setup:env:win": "powershell -ExecutionPolicy Bypass -File scripts/setup-env.ps1"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.4",
-    "@astrojs/tailwind": "^6.0.0",
-    "@supabase/supabase-js": "^2.38.4",
-    "astro": "^4.0.0",
-    "tailwindcss": "^4.1.12",
-    "zod": "^3.22.4",
-    "nanoid": "^5.0.4"
+    "@astrojs/cloudflare": "^11.2.0",
+    "@astrojs/tailwind": "^5.1.5",
+    "@supabase/supabase-js": "^2.46.4",
+    "astro": "^4.16.19",
+    "nanoid": "^5.0.4",
+    "paynow": "^2.2.2",
+    "stripe": "^18.4.0",
+    "tailwindcss": "^3.4.16",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.12",
-    "wrangler": "^3.22.1",
-    "@types/node": "^20.10.0",
-    "typescript": "^5.3.0"
+    "@types/node": "^20.19.11",
+    "supabase": "^2.34.3",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.114.14"
+  },
+  "overrides": {
+    "esbuild": "^0.25.9",
+    "@babel/runtime": "^7.26.10"
   },
   "keywords": [
     "astro",

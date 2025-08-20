@@ -152,7 +152,7 @@ export async function verifyToken(token: string): Promise<User | null> {
       : membership.role;
     
     // Get effective permissions
-    const rolePermissions = ROLE_PERMISSIONS[finalRole] || [];
+    const rolePermissions = ROLE_PERMISSIONS[finalRole as UserRole] || [];
     const customPermissions = Array.isArray(membership.permissions) 
       ? membership.permissions 
       : [];
@@ -230,7 +230,7 @@ function verifyMockToken(token: string): User | null {
     }
   };
   
-  return mockUsers[token] || null;
+  return mockUsers[token as keyof typeof mockUsers] || null;
 }
 
 // Check if user is admin (admin or super_admin)

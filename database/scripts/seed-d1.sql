@@ -2,7 +2,7 @@
 
 -- Insert products
 INSERT INTO products (slug, name, description, icon, status, features) VALUES
-('mail-organizer', 'Mail Organizer', 'AI-powered email management and organization', 'mail', 'active',
+('mailsense', 'MailSense', 'AI-powered email management and organization', 'mail', 'active',
  '["Smart categorization", "AI email summaries", "Smart filters", "Priority inbox", "Auto-replies", "Email analytics", "Gmail integration"]'
 ),
 ('seo-manager', 'SEO Manager', 'Automated WordPress SEO optimization', 'search', 'active',
@@ -21,7 +21,7 @@ INSERT INTO products (slug, name, description, icon, status, features) VALUES
  '["Event creation", "RSVP management", "Notifications", "Calendar integration", "Social sharing", "Analytics"]'
 );
 
--- Insert Mail Organizer plans
+-- Insert MailSense plans
 INSERT INTO subscription_plans (product_id, name, slug, price_monthly, price_yearly, features, limits, sort_order)
 SELECT
     id,
@@ -32,7 +32,7 @@ SELECT
     '{"email_accounts": 1, "basic_categorization": true, "ai_summaries": false, "smart_filters": 5}'::jsonb,
     '{"email_accounts": 1, "ai_credits_per_month": 50, "storage_gb": 1, "api_calls_per_month": 500}'::jsonb,
     1
-FROM products WHERE slug = 'mail-organizer'
+FROM products WHERE slug = 'mailsense'
 UNION ALL
 SELECT
     id,
@@ -43,7 +43,7 @@ SELECT
     '{"email_accounts": 3, "ai_categorization": true, "ai_summaries": true, "smart_filters": 20, "priority_inbox": true}'::jsonb,
     '{"email_accounts": 3, "ai_credits_per_month": 500, "storage_gb": 10, "api_calls_per_month": 5000}'::jsonb,
     2
-FROM products WHERE slug = 'mail-organizer'
+FROM products WHERE slug = 'mailsense'
 UNION ALL
 SELECT
     id,
@@ -54,7 +54,7 @@ SELECT
     '{"email_accounts": 10, "ai_categorization": true, "ai_summaries": true, "smart_filters": 100, "priority_inbox": true, "team_collaboration": true}'::jsonb,
     '{"email_accounts": 10, "ai_credits_per_month": 2000, "storage_gb": 50, "api_calls_per_month": 25000}'::jsonb,
     3
-FROM products WHERE slug = 'mail-organizer'
+FROM products WHERE slug = 'mailsense'
 UNION ALL
 SELECT
     id,
@@ -65,7 +65,7 @@ SELECT
     '{"email_accounts": -1, "ai_categorization": true, "ai_summaries": true, "smart_filters": -1, "priority_inbox": true, "team_collaboration": true, "custom_integrations": true}'::jsonb,
     '{"email_accounts": -1, "ai_credits_per_month": -1, "storage_gb": -1, "api_calls_per_month": -1}'::jsonb,
     4
-FROM products WHERE slug = 'mail-organizer';
+FROM products WHERE slug = 'mailsense';
 
 -- Insert SEO Manager plans
 INSERT INTO subscription_plans (product_id, name, slug, price_monthly, price_yearly, features, limits, sort_order)

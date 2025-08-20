@@ -12,13 +12,13 @@
 
 ## 🚀 Overview
 
-Nyuchi Platform is a **secure, enterprise-grade SaaS ecosystem** featuring **Mail Organizer** and other productivity tools. Built with security-first principles, comprehensive input validation, role-based access control, and enterprise compliance standards.
+Nyuchi Platform is a **secure, enterprise-grade SaaS ecosystem** featuring **MailSense** and other productivity tools. Built with security-first principles, comprehensive input validation, role-based access control, and enterprise compliance standards.
 
 > **🔒 Security Notice**: This platform has undergone comprehensive security auditing and implements enterprise-grade protection. See [Security Audit & Fixes](./guides/SECURITY_AUDIT_AND_FIXES.md) for details.
 
 ### 🎯 Core Products
 
-- **📧 Mail Organizer**: AI-powered Gmail extension with secure email management
+- **📧 MailSense**: AI-powered Gmail extension with secure email management
 - **🔍 SEO Manager**: WordPress SEO optimization with secure API integration
 - **📊 Analytics Pro**: Business analytics with data privacy protection
 - **🌍 Travel Community**: Community-driven travel platform (always free)
@@ -45,7 +45,7 @@ Nyuchi Platform is a **secure, enterprise-grade SaaS ecosystem** featuring **Mai
 │ Unified Database    │ ← Consolidated D1 + Supabase
 ├─────────────────────┤
 │ • Supabase: Auth    │ ← User profiles, organizations, RBAC
-│ • D1: App Data      │ ← Mail Organizer, SEO, Analytics data
+│ • D1: App Data      │ ← MailSense, SEO, Analytics data
 └─────────────────────┘
 ```
 
@@ -72,7 +72,7 @@ Mail-Organizer/
 │   ├── config.ts                 # Secure environment validation
 │   └── index.ts                  # Unified database exports
 ├── packages/                     # Shared packages & extensions
-│   ├── gmail-tabs-extension/     # Chrome extension (Mail Organizer)
+│   ├── mailsense-extension/     # Chrome extension (MailSense)
 │   ├── ui/                       # Shared UI components
 │   └── wordpress-plugin/         # WordPress SEO integration
 ├── guides/                       # Documentation & Security Guides
@@ -90,7 +90,7 @@ Mail-Organizer/
 Following the **Cloudflare SaaS template** with centralized configuration and security.
 
 ### Cloudflare D1 (Application Data)
-- **Mail Organizer**: Email accounts, messages, categories, AI tasks
+- **MailSense**: Email accounts, messages, categories, AI tasks
 - **SEO Manager**: WordPress sites, optimization tasks  
 - **Analytics Pro**: Event tracking, usage metrics
 - **Products**: Subscription plans, billing data
@@ -110,7 +110,7 @@ Following the **Cloudflare SaaS template** with centralized configuration and se
 - ✅ **Connection Limits**: Resource protection
 - ✅ **Audit Trails**: Complete action logging
 
-## 📧 Mail Organizer
+## 📧 MailSense
 
 ### Features
 - **AI Email Categorization**: Automatically categorize emails
@@ -269,7 +269,7 @@ All API endpoints implement **enterprise-grade security**:
 7. 🚫 Error sanitization (no data leaks)
 ```
 
-### Mail Organizer API (Secured)
+### MailSense API (Secured)
 
 ```javascript
 // All endpoints require authentication + validation
