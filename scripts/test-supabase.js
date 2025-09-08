@@ -23,7 +23,7 @@ console.log('🟢 Testing Supabase Connection...\n');
 // Initialize Supabase client
 const supabase = createClient(
   env.SUPABASE_URL,
-  env.SUPABASE_ANON_KEY
+  env.SUPABASE_KEY || env.SUPABASE_ANON_KEY
 );
 
 async function testConnection() {

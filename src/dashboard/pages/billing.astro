@@ -1,0 +1,623 @@
+---
+import Layout from '../../core/layouts/DashboardLayout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Subscription Management - Dashboard">
+  <Header />
+  
+  <main class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Subscription & Billing</h1>
+        <p class="text-gray-600">Manage your subscription, usage, and billing information</p>
+      </div>
+
+      <!-- Current Plan Card -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-900">Current Plan</h2>
+            <button onclick="showPlanComparison()" class="btn btn-secondary">Compare Plans</button>
+          </div>
+          
+          <div id="current-plan-info" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Plan info will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage Statistics -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-900">Usage Statistics</h2>
+            <select id="usage-period" onchange="loadUsageStats()" class="form-select">
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+              <option value="1y">Last year</option>
+            </select>
+          </div>
+          
+          <div id="usage-stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <!-- Usage stats will be loaded here -->
+          </div>
+          
+          <!-- Usage Warnings -->
+          <div id="usage-warnings" class="mt-6 hidden">
+            <!-- Warnings will be displayed here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Billing Information -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Payment Method -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-gray-900">Payment Method</h3>
+              <button onclick="updatePaymentMethod()" class="text-blue-600 hover:text-blue-700 text-sm">Update</button>
+            </div>
+            
+            <div id="payment-method-info">
+              <!-- Payment method info will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Bill -->
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Next Bill</h3>
+            
+            <div id="next-bill-info">
+              <!-- Next bill info will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Billing History -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-gray-900">Billing History</h3>
+            <button onclick="downloadBillingHistory()" class="btn btn-secondary text-sm">Download CSV</button>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice</th>
+                </tr>
+              </thead>
+              <tbody id="billing-history" class="bg-white divide-y divide-gray-200">
+                <!-- Billing history will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan Comparison Modal -->
+    <div id="plan-comparison-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-screen overflow-y-auto">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-bold text-gray-900">Plan Comparison</h3>
+              <button onclick="hidePlanComparison()" class="text-gray-400 hover:text-gray-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <div id="plan-comparison-content" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- Plan comparison will be loaded here -->
+            </div>
+            
+            <div class="mt-6 flex justify-end space-x-3">
+              <button onclick="hidePlanComparison()" class="btn btn-secondary">Close</button>
+              <button onclick="upgradePlan()" class="btn btn-primary">Upgrade Plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage Forecast Modal -->
+    <div id="usage-forecast-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-bold text-gray-900">Usage Forecast</h3>
+              <button onclick="hideUsageForecast()" class="text-gray-400 hover:text-gray-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <div id="usage-forecast-content">
+              <!-- Usage forecast will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let currentPlan = null;
+
+    // Load subscription data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCurrentPlan();
+      loadUsageStats();
+      loadBillingHistory();
+    });
+
+    async function loadCurrentPlan() {
+      try {
+        const response = await fetch('/api/subscriptions/get-plan', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          currentPlan = data.data;
+          displayCurrentPlan(data.data);
+        } else {
+          alert('Failed to load subscription information');
+        }
+      } catch (error) {
+        alert('Error loading subscription information');
+      }
+    }
+
+    function displayCurrentPlan(planData: any) {
+      const container = document.getElementById('current-plan-info');
+      if (!container) return;
+      
+      const plan = planData.subscription;
+      const org = planData.organization;
+
+      container.innerHTML = `
+        <div>
+          <h4 class="font-medium text-gray-900 mb-2">Current Plan</h4>
+          <p class="text-2xl font-bold text-blue-600">${plan.name}</p>
+          <p class="text-sm text-gray-500">$${plan.price_monthly}/month</p>
+        </div>
+        <div>
+          <h4 class="font-medium text-gray-900 mb-2">Organization</h4>
+          <p class="text-lg font-semibold">${org.name}</p>
+          <p class="text-sm text-gray-500">Status: ${org.status}</p>
+        </div>
+        <div>
+          <h4 class="font-medium text-gray-900 mb-2">Actions</h4>
+          <div class="space-y-2">
+            <button onclick="showUsageForecast()" class="block text-blue-600 hover:text-blue-700 text-sm">View Usage Forecast</button>
+            <button onclick="upgradePlan()" class="block text-green-600 hover:text-green-700 text-sm">Upgrade Plan</button>
+            <button onclick="cancelSubscription()" class="block text-red-600 hover:text-red-700 text-sm">Cancel Subscription</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadUsageStats() {
+      try {
+        const periodElement = document.getElementById('usage-period') as HTMLSelectElement;
+        if (!periodElement) return;
+        const period = periodElement.value;
+        const response = await fetch('/api/subscriptions/usage-stats', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ period })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          displayUsageStats(data.data);
+        } else {
+          alert('Failed to load usage statistics');
+        }
+      } catch (error) {
+        alert('Error loading usage statistics');
+      }
+    }
+
+    function displayUsageStats(usageData: any) {
+      const container = document.getElementById('usage-stats');
+      if (!container) return;
+      
+      const usage = usageData.usage.current;
+      const limits = usageData.limits;
+      const percentages = usageData.usage_percentage;
+
+      const stats = [
+        { name: 'Users', current: usage.users, limit: limits.users, percentage: percentages.users },
+        { name: 'Mail Accounts', current: usage.mail_accounts, limit: limits.mail_accounts, percentage: percentages.mail_accounts },
+        { name: 'SEO Sites', current: usage.seo_sites, limit: limits.seo_sites, percentage: percentages.seo_sites },
+        { name: 'Analytics Events', current: usage.analytics_events, limit: limits.analytics_events, percentage: percentages.analytics_events },
+        { name: 'Storage', current: `${usage.storage_mb}MB`, limit: `${limits.storage_mb}MB`, percentage: percentages.storage_mb }
+      ];
+
+      container.innerHTML = stats.map(stat => {
+        const limitText = stat.limit === -1 ? 'Unlimited' : stat.limit;
+        const progressColor = stat.percentage >= 90 ? 'bg-red-500' : stat.percentage >= 80 ? 'bg-yellow-500' : 'bg-green-500';
+
+        return `
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-sm font-medium text-gray-700">${stat.name}</h4>
+              <span class="text-xs text-gray-500">${stat.current} / ${limitText}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="${progressColor} h-2 rounded-full" style="width: ${Math.min(stat.percentage, 100)}%"></div>
+            </div>
+            <p class="text-xs text-gray-600 mt-1">${Math.round(stat.percentage)}% used</p>
+          </div>
+        `;
+      }).join('');
+
+      // Display warnings if any
+      if (usageData.warnings && usageData.warnings.length > 0) {
+        const warningsContainer = document.getElementById('usage-warnings');
+        if (warningsContainer) {
+          warningsContainer.classList.remove('hidden');
+          warningsContainer.innerHTML = `
+          <div class="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-yellow-800">Usage Warnings</h3>
+                <div class="mt-2 text-sm text-yellow-700">
+                  <ul class="list-disc pl-5 space-y-1">
+                    ${usageData.warnings.map(warning => `<li>${warning}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        }
+      }
+    }
+
+    async function loadBillingHistory() {
+      try {
+        const response = await fetch('/api/subscriptions/billing-history', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ limit: 12 })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          displayBillingHistory(data.data);
+        } else {
+          alert('Failed to load billing history');
+        }
+      } catch (error) {
+        alert('Error loading billing history');
+      }
+    }
+
+    function displayBillingHistory(billingData: any) {
+      // Display payment method
+      const paymentMethodContainer = document.getElementById('payment-method-info');
+      if (!paymentMethodContainer) return;
+      
+      const paymentMethod = billingData.payment_method;
+      paymentMethodContainer.innerHTML = `
+        <div class="flex items-center">
+          <div class="w-8 h-6 bg-blue-600 rounded text-white text-xs flex items-center justify-center mr-3">
+            VISA
+          </div>
+          <div>
+            <p class="text-sm font-medium">•••• •••• •••• ${paymentMethod.last_four}</p>
+            <p class="text-xs text-gray-500">Expires ${paymentMethod.expires}</p>
+          </div>
+        </div>
+      `;
+
+      // Display next bill
+      const nextBillContainer = document.getElementById('next-bill-info');
+      if (!nextBillContainer) return;
+      
+      const nextBill = billingData.upcoming_bill;
+      nextBillContainer.innerHTML = `
+        <div>
+          <p class="text-sm text-gray-600">Next bill date</p>
+          <p class="text-lg font-semibold">${formatDate(nextBill.date)}</p>
+          <p class="text-sm text-gray-600 mt-2">Amount due</p>
+          <p class="text-xl font-bold text-green-600">$${nextBill.amount}</p>
+          <p class="text-xs text-gray-500">${nextBill.description}</p>
+        </div>
+      `;
+
+      // Display billing history
+      const historyContainer = document.getElementById('billing-history');
+      if (!historyContainer) return;
+      
+      historyContainer.innerHTML = billingData.billing_history.map((bill: any) => {
+        const statusBadge = bill.status === 'paid' 
+          ? '<span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Paid</span>'
+          : '<span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Failed</span>';
+
+        return `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              ${formatDate(bill.date)}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              ${bill.description}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              $${bill.amount}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              ${statusBadge}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <a href="${bill.invoice_url}" target="_blank" class="text-blue-600 hover:text-blue-900">Download</a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString();
+    }
+
+    // Modal functions
+    async function showPlanComparison() {
+      try {
+        const response = await fetch('/api/subscriptions/plan-comparison', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          displayPlanComparison(data.data.plans);
+          document.getElementById('plan-comparison-modal')?.classList.remove('hidden');
+        }
+      } catch (error) {
+        alert('Error loading plan comparison');
+      }
+    }
+
+    function displayPlanComparison(plans: any) {
+      const container = document.getElementById('plan-comparison-content');
+      if (!container) return;
+      
+      const currentPlanType = (currentPlan as any)?.organization?.plan_type;
+
+      container.innerHTML = Object.entries(plans).map(([key, plan]: [string, any]) => {
+        const isCurrent = key === currentPlanType;
+        const cardClass = isCurrent ? 'border-2 border-blue-500 bg-blue-50' : 'border border-gray-200';
+
+        return `
+          <div class="${cardClass} rounded-lg p-6">
+            <div class="text-center">
+              <h4 class="text-lg font-bold text-gray-900">${(plan as any).name}</h4>
+              ${isCurrent ? '<p class="text-sm text-blue-600 font-medium">Current Plan</p>' : ''}
+              <p class="text-3xl font-bold text-gray-900 mt-2">$${(plan as any).price_monthly}</p>
+              <p class="text-sm text-gray-500">per month</p>
+              <p class="text-sm text-gray-500">$${(plan as any).price_yearly} yearly</p>
+            </div>
+            <div class="mt-6">
+              <ul class="space-y-2">
+                ${(plan as any).features.map((feature: string) => `
+                  <li class="flex items-center text-sm text-gray-600">
+                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    ${feature}
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+            <div class="mt-6">
+              ${!isCurrent ? `<button onclick="selectPlan('${key}')" class="w-full btn btn-primary">Select Plan</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function hidePlanComparison() {
+      document.getElementById('plan-comparison-modal')?.classList.add('hidden');
+    }
+
+    async function showUsageForecast() {
+      try {
+        const response = await fetch('/api/subscriptions/usage-forecast', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ forecast_days: 30 })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          displayUsageForecast(data.data);
+          document.getElementById('usage-forecast-modal')?.classList.remove('hidden');
+        }
+      } catch (error) {
+        alert('Error loading usage forecast');
+      }
+    }
+
+    function displayUsageForecast(forecastData: any) {
+      const container = document.getElementById('usage-forecast-content');
+      if (!container) return;
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">30-Day Usage Forecast</h4>
+          <p class="text-gray-600">Based on your historical usage patterns</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h5 class="font-medium text-gray-900 mb-3">Projected Usage</h5>
+            <div class="space-y-3">
+              ${Object.entries(forecastData.forecast).map(([key, projection]: [string, any]) => `
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-600">${key.replace('_', ' ').toUpperCase()}</span>
+                  <div class="text-right">
+                    <span class="text-sm font-medium">${(projection as any).projected}</span>
+                    <span class="text-xs text-gray-500 block">Confidence: ${Math.round((projection as any).confidence * 100)}%</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <div>
+            <h5 class="font-medium text-gray-900 mb-3">Recommendations</h5>
+            <div class="space-y-2">
+              ${forecastData.recommendations.map(rec => `
+                <p class="text-sm text-gray-600">• ${rec}</p>
+              `).join('')}
+            </div>
+            
+            ${forecastData.projected_limit_exceeded.length > 0 ? `
+              <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                <p class="text-sm text-yellow-800 font-medium">⚠️ Potential Limit Exceeded</p>
+                <p class="text-sm text-yellow-700">
+                  You may exceed limits for: ${forecastData.projected_limit_exceeded.join(', ')}
+                </p>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function hideUsageForecast() {
+      document.getElementById('usage-forecast-modal')?.classList.add('hidden');
+    }
+
+    async function selectPlan(planType) {
+      if (confirm(`Are you sure you want to upgrade to the ${planType} plan?`)) {
+        try {
+          const response = await fetch('/api/subscriptions/update-plan', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer admin-token',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              plan_type: planType,
+              billing_cycle: 'monthly'
+            })
+          });
+
+          if (response.ok) {
+            alert('Plan updated successfully!');
+            hidePlanComparison();
+            loadCurrentPlan();
+          } else {
+            const error = await response.json();
+            alert(error.message || 'Failed to update plan');
+          }
+        } catch (error) {
+          alert('Error updating plan');
+        }
+      }
+    }
+
+    function upgradePlan() {
+      showPlanComparison();
+    }
+
+    async function cancelSubscription() {
+      const reason = prompt('Please tell us why you\'re cancelling (optional):');
+      
+      if (confirm('Are you sure you want to cancel your subscription? Your account will be downgraded to the free plan.')) {
+        try {
+          const response = await fetch('/api/subscriptions/cancel-subscription', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer admin-token',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              cancellation_reason: reason
+            })
+          });
+
+          if (response.ok) {
+            alert('Subscription cancelled successfully. Your account has been downgraded to the free plan.');
+            loadCurrentPlan();
+          } else {
+            alert('Failed to cancel subscription');
+          }
+        } catch (error) {
+          alert('Error cancelling subscription');
+        }
+      }
+    }
+
+    function updatePaymentMethod() {
+      alert('Payment method update functionality coming soon!');
+    }
+
+    function downloadBillingHistory() {
+      alert('Download functionality coming soon!');
+    }
+  </script>
+
+  <style>
+    .btn {
+      @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+    }
+    
+    .btn-primary {
+      @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+    }
+    
+    .btn-secondary {
+      @apply text-gray-700 bg-white hover:bg-gray-50 border-gray-300 focus:ring-blue-500;
+    }
+    
+    .form-select {
+      @apply rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+    }
+  </style>
+</Layout>

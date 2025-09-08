@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
-    './packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}',
+    './core/**/*.{js,ts,jsx,tsx,mdx,astro}',
     './packages/mailsense-extension/**/*.{html,js}',
   ],
   theme: {

@@ -1,0 +1,5 @@
+{
+  "schema": "./schema/index.ts",
+  "out": "./migrations/d1",
+  "dialect": "sqlite"
+}

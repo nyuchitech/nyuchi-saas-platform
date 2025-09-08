@@ -1,0 +1,247 @@
+---
+// Dynamic Header component with responsive navigation
+export interface Props {
+  appType?: 'marketing' | 'dashboard' | 'admin';
+  currentPath?: string;
+}
+
+const { appType = 'marketing', currentPath = '/' } = Astro.props;
+
+// Define navigation items with nesting support
+const getNavItems = (type: string) => {
+  switch (type) {
+    case 'marketing':
+      return [
+        { 
+          href: '#', 
+          label: 'Projects',
+          hasDropdown: true,
+          dropdownItems: [
+            { href: '/travel-platform', label: 'Travel Platform' },
+            { href: '/harare-metro', label: 'Harare Metro' },
+            { href: '/mukoko', label: 'Mukoko' }
+          ]
+        },
+        { 
+          href: '#', 
+          label: 'Products',
+          hasDropdown: true,
+          dropdownItems: [
+            { href: '/mail-organizer', label: 'Mail Organizer' },
+            { href: '/seo-manager', label: 'SEO Manager' },
+            { href: '/content-hub', label: 'Content Hub' },
+            { href: '/analytics-pro', label: 'Analytics Pro' }
+          ]
+        },
+        { 
+          href: '#', 
+          label: 'About',
+          hasDropdown: true,
+          dropdownItems: [
+            { href: '/blog', label: 'Blog' },
+            { href: '/contact', label: 'Contact' },
+            { href: '/about', label: 'About Company' },
+            { href: '/support', label: 'Support' }
+          ]
+        }
+      ];
+    case 'dashboard':
+      return [
+        { href: '/dashboard', label: 'Dashboard' },
+        { href: '/dashboard/mailsense', label: 'MailSense' },
+        { href: '/dashboard/billing', label: 'Billing' },
+        { href: '/dashboard/payments', label: 'Payments' }
+      ];
+    case 'admin':
+      return [
+        { href: '/admin', label: 'Overview' },
+        { href: '/admin/users', label: 'Users' },
+        { href: '/admin/analytics', label: 'Analytics' },
+        { href: '/admin/organizations', label: 'Organizations' }
+      ];
+    default:
+      return [];
+  }
+};
+
+const navItems = getNavItems(appType);
+
+// Define CTA buttons based on app type
+const getCtaButtons = (type: string) => {
+  switch (type) {
+    case 'marketing':
+      return [
+        { href: 'https://dashboard.nyuchi.com', label: 'Dashboard', variant: 'primary' }
+      ];
+    case 'dashboard':
+      return [
+        { href: '/login', label: 'Logout', variant: 'secondary' }
+      ];
+    case 'admin':
+      return [
+        { href: 'https://dashboard.nyuchi.com', label: 'Dashboard', variant: 'secondary' },
+        { href: '/login', label: 'Logout', variant: 'primary' }
+      ];
+    default:
+      return [];
+  }
+};
+
+const ctaButtons = getCtaButtons(appType);
+---
+
+<style>
+  /* Enhanced dropdown styling */
+  .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .group:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Ensure dropdown stays open when hovering over menu items */
+  .group:hover .dropdown-menu,
+  .dropdown-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+</style>
+
+<header class="nav-marketing">
+  <div class="container-marketing">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+          <img src="/nyuchi-logo-dark-white.png" alt="Nyuchi Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
+          <span class="text-xl sm:text-2xl font-bold text-white brand-text">Nyuchi</span>
+        </a>
+      </div>
+
+      <!-- Navigation - Always Visible -->
+      <div class="flex items-center">
+        <nav class="flex items-center">
+          {navItems.map((item) => (
+            item.hasDropdown ? (
+              <div class="relative group">
+                <button 
+                  class="nav-marketing-link text-sm group px-4"
+                >
+                  {item.label}
+                </button>
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu absolute top-full left-0 mt-2 w-56 bg-black/95 backdrop-blur-sm border border-gray-800 rounded-md shadow-lg z-50">
+                  <div class="py-2">
+                    {item.dropdownItems?.map((dropdownItem) => (
+                      <a 
+                        href={dropdownItem.href}
+                        class={`block px-4 py-2 text-sm transition-colors nav-marketing-link ${
+                          currentPath === dropdownItem.href 
+                            ? 'bg-gray-800 text-white' 
+                            : 'hover:bg-gray-800'
+                        }`}
+                      >
+                        {dropdownItem.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a 
+                href={item.href} 
+                class={`nav-marketing-link text-sm px-4 ${
+                  currentPath === item.href ? 'text-white' : ''
+                }`}
+              >
+                {item.label}
+              </a>
+            )
+          ))}
+        </nav>
+        
+        <!-- CTA Buttons -->
+        <div class="flex items-center ml-8">
+          {ctaButtons.map((button) => (
+            <a 
+              href={button.href} 
+              class={button.variant === 'primary' ? 'btn-nav' : 'btn-nav-secondary'}
+            >
+              {button.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Enhanced dropdown functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Make all dropdown buttons and navigation links clickable
+    const dropdownButtons = document.querySelectorAll('.group button');
+    const navLinks = document.querySelectorAll('nav a');
+    const ctaButtons = document.querySelectorAll('.btn-nav, .btn-nav-secondary');
+    
+    // Ensure all navigation links are clickable
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        if (this.href && this.href !== '#') {
+          window.location.href = this.href;
+        }
+      });
+    });
+    
+    // Ensure all CTA buttons are clickable
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        if (this.href && this.href !== '#') {
+          window.location.href = this.href;
+        }
+      });
+    });
+    
+    // Enhanced dropdown hover functionality
+    const dropdownGroups = document.querySelectorAll('.group');
+    
+    dropdownGroups.forEach(group => {
+      const dropdown = group.querySelector('.dropdown-menu');
+      
+      if (dropdown) {
+        // Show dropdown on hover
+        group.addEventListener('mouseenter', function() {
+          dropdown.style.opacity = '1';
+          dropdown.style.visibility = 'visible';
+          dropdown.style.transform = 'translateY(0)';
+        });
+        
+        // Hide dropdown when leaving
+        group.addEventListener('mouseleave', function() {
+          dropdown.style.opacity = '0';
+          dropdown.style.visibility = 'hidden';
+          dropdown.style.transform = 'translateY(-10px)';
+        });
+        
+        // Make dropdown links clickable
+        const dropdownLinks = dropdown.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            if (this.href && this.href !== '#') {
+              window.location.href = this.href;
+            }
+          });
+        });
+      }
+    });
+  });
+</script>
+
+

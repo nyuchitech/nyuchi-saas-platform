@@ -1,0 +1,470 @@
+---
+// Product Registration Modal
+// Allows admins to register external product repositories
+---
+
+<div id="productModal" class="modal-overlay" style="display: none;">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Register New Product</h3>
+      <button class="modal-close" data-action="close-modal">&times;</button>
+    </div>
+
+    <form id="productRegistrationForm" class="modal-content">
+      <div class="form-section">
+        <h4>Basic Information</h4>
+        
+        <div class="form-group">
+          <label for="productName">Product Name *</label>
+          <input 
+            type="text" 
+            id="productName" 
+            name="name" 
+            required 
+            placeholder="e.g. MailSense Pro"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="productSlug">Slug *</label>
+          <input 
+            type="text" 
+            id="productSlug" 
+            name="slug" 
+            required 
+            placeholder="e.g. mailsense-pro"
+            pattern="[a-z0-9-]+"
+            title="Only lowercase letters, numbers, and hyphens allowed"
+          />
+          <small class="form-help">Used for URLs and deployment names. Only lowercase letters, numbers, and hyphens.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="productDescription">Description</label>
+          <textarea 
+            id="productDescription" 
+            name="description" 
+            rows="3"
+            placeholder="Brief description of the product"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="productCategory">Category</label>
+          <select id="productCategory" name="category_id">
+            <option value="">Select a category</option>
+            <option value="email-management">Email Management</option>
+            <option value="seo-tools">SEO Tools</option>
+            <option value="analytics">Analytics</option>
+            <option value="travel-transport">Travel & Transport</option>
+            <option value="business-tools">Business Tools</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h4>Repository Configuration</h4>
+        
+        <div class="form-group">
+          <label for="repositoryUrl">Repository URL *</label>
+          <input 
+            type="url" 
+            id="repositoryUrl" 
+            name="repository_url" 
+            required 
+            placeholder="https://github.com/yourusername/your-repo"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="repositoryType">Repository Type</label>
+            <select id="repositoryType" name="repository_type">
+              <option value="github">GitHub</option>
+              <option value="gitlab">GitLab</option>
+              <option value="bitbucket">Bitbucket</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="branch">Branch</label>
+            <input 
+              type="text" 
+              id="branch" 
+              name="branch" 
+              value="main" 
+              placeholder="main"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h4>Deployment Configuration</h4>
+        
+        <div class="form-group">
+          <label for="buildCommand">Build Command</label>
+          <input 
+            type="text" 
+            id="buildCommand" 
+            name="build_command" 
+            placeholder="npm run build"
+          />
+          <small class="form-help">Command to build your application</small>
+        </div>
+
+        <div class="form-group">
+          <label for="outputDirectory">Output Directory</label>
+          <input 
+            type="text" 
+            id="outputDirectory" 
+            name="output_directory" 
+            placeholder="dist"
+            value="dist"
+          />
+          <small class="form-help">Directory containing built files</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="workerType">Worker Type</label>
+            <select id="workerType" name="worker_type">
+              <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
+              <option value="python">Python</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="memoryLimit">Memory Limit (MB)</label>
+            <input 
+              type="number" 
+              id="memoryLimit" 
+              name="memory_limit" 
+              value="128"
+              min="64"
+              max="1024"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="timeout">Timeout (seconds)</label>
+          <input 
+            type="number" 
+            id="timeout" 
+            name="timeout" 
+            value="30"
+            min="1"
+            max="300"
+          />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h4>Environment Variables</h4>
+        <div id="environmentVariables">
+          <div class="env-var-row">
+            <input type="text" placeholder="KEY" name="env_key_0" />
+            <input type="text" placeholder="Value" name="env_value_0" />
+            <button type="button" class="btn btn-sm btn-outline" data-action="remove-env-var">Remove</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline" data-action="add-env-var">
+          + Add Environment Variable
+        </button>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-action="close-modal">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Register Product
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .modal-header h3 {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .modal-close:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+  }
+
+  .form-section:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .form-section h4 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-help {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .env-var-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    margin: 1.5rem -1.5rem -1.5rem -1.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('productModal');
+    const form = document.getElementById('productRegistrationForm');
+    
+    // Open modal handler
+    window.openProductModal = function() {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+
+    // Close modal handlers
+    document.querySelectorAll('[data-action="close-modal"]').forEach(button => {
+      button.addEventListener('click', closeModal);
+    });
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      form.reset();
+    }
+
+    // Auto-generate slug from name
+    document.getElementById('productName').addEventListener('input', function(e) {
+      const slug = e.target.value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+      document.getElementById('productSlug').value = slug;
+    });
+
+    // Environment variables management
+    let envVarCount = 1;
+
+    document.querySelector('[data-action="add-env-var"]').addEventListener('click', function() {
+      const container = document.getElementById('environmentVariables');
+      const newRow = document.createElement('div');
+      newRow.className = 'env-var-row';
+      newRow.innerHTML = `
+        <input type="text" placeholder="KEY" name="env_key_${envVarCount}" />
+        <input type="text" placeholder="Value" name="env_value_${envVarCount}" />
+        <button type="button" class="btn btn-sm btn-outline" data-action="remove-env-var">Remove</button>
+      `;
+      container.appendChild(newRow);
+      
+      newRow.querySelector('[data-action="remove-env-var"]').addEventListener('click', function() {
+        newRow.remove();
+      });
+      
+      envVarCount++;
+    });
+
+    // Remove environment variable
+    document.addEventListener('click', function(e) {
+      if (e.target.matches('[data-action="remove-env-var"]')) {
+        const row = e.target.closest('.env-var-row');
+        if (document.querySelectorAll('.env-var-row').length > 1) {
+          row.remove();
+        }
+      }
+    });
+
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Collect environment variables
+      const envVars = {};
+      const envKeys = Array.from(formData.keys()).filter(key => key.startsWith('env_key_'));
+      envKeys.forEach(keyName => {
+        const index = keyName.split('_')[2];
+        const key = formData.get(keyName);
+        const value = formData.get(`env_value_${index}`);
+        if (key && value) {
+          envVars[key] = value;
+        }
+      });
+
+      // Build deployment config
+      const deploymentConfig = {
+        build_command: data.build_command || 'npm run build',
+        output_directory: data.output_directory || 'dist',
+        worker_type: data.worker_type || 'javascript',
+        memory_limit: parseInt(data.memory_limit) || 128,
+        timeout: parseInt(data.timeout) || 30,
+        environment_variables: envVars
+      };
+
+      const productData = {
+        name: data.name,
+        slug: data.slug,
+        description: data.description,
+        repository_url: data.repository_url,
+        repository_type: data.repository_type || 'github',
+        branch: data.branch || 'main',
+        deployment_config: deploymentConfig,
+        category_id: data.category_id
+      };
+
+      try {
+        const response = await fetch('/api/products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(productData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          closeModal();
+          // Refresh the product list or show success message
+          location.reload();
+        } else {
+          alert('Error: ' + (result.error || 'Failed to register product'));
+        }
+      } catch (error) {
+        console.error('Error registering product:', error);
+        alert('Error: Failed to register product');
+      }
+    });
+  });
+</script>

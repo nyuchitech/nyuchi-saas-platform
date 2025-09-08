@@ -10,14 +10,26 @@
     "CLOUDFLARE_API_TOKEN",
     "D1_DATABASE_NAME"
   ],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "deploy": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "deploy:preview": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "deploy:production": {
+      "dependsOn": ["build"],
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^lint"]

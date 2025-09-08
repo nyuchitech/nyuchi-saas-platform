@@ -18,6 +18,9 @@ export default defineConfig({
   }),
   integrations: [tailwind()],
   output: 'hybrid',
+  srcDir: './src',
+  publicDir: './public',
+  outDir: './dist',
   vite: {
     define: {
       'process.env.SUPABASE_URL': JSON.stringify(env.SUPABASE_URL || ''),

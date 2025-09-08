@@ -1,0 +1,210 @@
+---
+// Login page for dashboard authentication
+const title = 'Login - Nyuchi Africa';
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Login to access your Nyuchi Africa dashboard" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Typography - Roboto for body, Playfair Display for headings -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  
+  <!-- Marketing-specific CSS for consistent styling -->
+  <link rel="stylesheet" href="/src/marketing/styles/marketing.css" />
+  
+  <title>{title}</title>
+</head>
+
+<body class="bg-black text-white antialiased">
+  <!-- Zimbabwe Flag Brand Strip -->
+  <div class="zimbabwe-flag-strip">
+    <div class="flag-green"></div>
+    <div class="flag-yellow"></div>
+    <div class="flag-red"></div>
+    <div class="flag-black"></div>
+  </div>
+  
+  <!-- Login Container -->
+  <div class="min-h-screen flex items-center justify-center pl-8">
+    <div class="max-w-md w-full space-y-8">
+      <!-- Logo and Header -->
+      <div class="text-center">
+        <div class="flex items-center justify-center mb-6">
+          <img src="/nyuchi-logo-dark-white.png" alt="Nyuchi Logo" class="w-16 h-16" />
+        </div>
+        <h1 class="heading-section">
+          Welcome <span class="text-gray-400">Back</span>
+        </h1>
+        <p class="text-marketing-muted mt-2">
+          Sign in to access your Nyuchi Africa dashboard
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="mt-8 space-y-6">
+        <div class="space-y-4">
+          <div>
+            <label for="email" class="block text-sm font-medium text-white mb-2">
+              Email Address
+            </label>
+            <input 
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition-colors text-white"
+              placeholder="Enter your email"
+            />
+          </div>
+          
+          <div>
+            <label for="password" class="block text-sm font-medium text-white mb-2">
+              Password
+            </label>
+            <input 
+              id="password"
+              name="password"
+              type="password"
+              required
+              class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition-colors text-white"
+              placeholder="Enter your password"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input 
+              id="remember"
+              name="remember"
+              type="checkbox"
+              class="h-4 w-4 text-green-500 focus:ring-green-500 border-gray-700 rounded bg-gray-800"
+            />
+            <label for="remember" class="ml-2 block text-sm text-gray-300">
+              Remember me
+            </label>
+          </div>
+
+          <div class="text-sm">
+            <a href="#" class="text-green-400 hover:text-green-300 transition-colors">
+              Forgot password?
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <button 
+            type="submit"
+            class="btn-marketing-primary w-full"
+          >
+            Sign In
+          </button>
+        </div>
+
+        <!-- Internal Employee Login Options -->
+        <div class="mt-8 pt-6 border-t border-gray-700">
+          <p class="text-center text-sm text-gray-400 mb-4">
+            Internal Employee Access
+          </p>
+          <div class="space-y-2">
+            <button 
+              type="button"
+              onclick="devLogin('super-admin-token')"
+              class="w-full px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              Super Admin Access
+            </button>
+            <button 
+              type="button"
+              onclick="devLogin('it-admin-token')"
+              class="w-full px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            >
+              IT Admin Access
+            </button>
+            <button 
+              type="button"
+              onclick="devLogin('data-specialist-token')"
+              class="w-full px-4 py-2 text-sm bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            >
+              Data Specialist Access
+            </button>
+            <button 
+              type="button"
+              onclick="devLogin('contributor-token')"
+              class="w-full px-4 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+            >
+              Contributor Access
+            </button>
+            <button 
+              type="button"
+              onclick="devLogin('viewer-token')"
+              class="w-full px-4 py-2 text-sm bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+            >
+              Viewer Access
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Footer Links -->
+      <div class="text-center">
+        <p class="text-sm text-gray-400">
+          Internal employees only. Need access? 
+          <a href="mailto:support@nyuchi.com" class="text-green-400 hover:text-green-300 transition-colors">
+            Contact Support
+          </a>
+        </p>
+        <p class="text-xs text-gray-500 mt-4">
+          <a href="/marketing" class="hover:text-gray-300 transition-colors">
+            ← Back to Marketing Site
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle regular login form submission
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        // Here you would implement your actual authentication logic
+        // For now, we'll show an alert
+        alert('Regular login not implemented yet. Please use development login options below.');
+      } catch (error) {
+        alert('Login failed. Please try again.');
+      }
+    });
+
+    // Development login function
+    window.devLogin = function(token) {
+      // Store the token in localStorage for development
+      localStorage.setItem('nyuchi_auth_token', token);
+      
+      // Get redirect parameter from URL or default to dashboard
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get('redirect') || '/dashboard';
+      
+      // Redirect to the specified URL
+      window.location.href = redirectUrl;
+    };
+
+    // Check if already logged in
+    if (localStorage.getItem('nyuchi_auth_token')) {
+      window.location.href = '/dashboard';
+    }
+  </script>
+</body>
+</html>

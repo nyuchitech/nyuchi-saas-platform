@@ -1,0 +1,393 @@
+---
+// Product Management Component for Dashboard
+// Handles external product repositories registration and deployment
+---
+
+<div class="product-manager">
+  <div class="product-manager__header">
+    <h2 class="section-title">Product Management</h2>
+    <button class="btn btn-primary" data-action="add-product">
+      <span class="icon">+</span>
+      Register New Product
+    </button>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card" data-product="mailsense">
+      <div class="product-card__header">
+        <div class="product-icon">📧</div>
+        <div class="product-info">
+          <h3>MailSense</h3>
+          <p>AI-powered email management</p>
+        </div>
+        <div class="product-status status-active">Active</div>
+      </div>
+      
+      <div class="product-card__details">
+        <div class="detail-row">
+          <span class="label">Repository:</span>
+          <span class="value">github.com/nyuchitech/mailsense</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Branch:</span>
+          <span class="value">main</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Last Deploy:</span>
+          <span class="value">2 hours ago</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Environment:</span>
+          <span class="value">preview</span>
+        </div>
+      </div>
+
+      <div class="product-card__actions">
+        <button class="btn btn-sm btn-outline" data-action="deploy" data-product="mailsense">
+          Deploy
+        </button>
+        <button class="btn btn-sm btn-outline" data-action="configure" data-product="mailsense">
+          Configure
+        </button>
+        <button class="btn btn-sm btn-outline" data-action="logs" data-product="mailsense">
+          View Logs
+        </button>
+      </div>
+    </div>
+
+    <div class="product-card" data-product="seo-manager">
+      <div class="product-card__header">
+        <div class="product-icon">📈</div>
+        <div class="product-info">
+          <h3>SEO Manager</h3>
+          <p>Comprehensive SEO toolkit</p>
+        </div>
+        <div class="product-status status-pending">Pending</div>
+      </div>
+      
+      <div class="product-card__details">
+        <div class="detail-row">
+          <span class="label">Repository:</span>
+          <span class="value">github.com/nyuchitech/seo-manager</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Branch:</span>
+          <span class="value">develop</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Status:</span>
+          <span class="value">Awaiting deployment</span>
+        </div>
+      </div>
+
+      <div class="product-card__actions">
+        <button class="btn btn-sm btn-primary" data-action="deploy" data-product="seo-manager">
+          Initial Deploy
+        </button>
+        <button class="btn btn-sm btn-outline" data-action="configure" data-product="seo-manager">
+          Configure
+        </button>
+      </div>
+    </div>
+
+    <div class="product-card placeholder" data-action="add-product">
+      <div class="placeholder-content">
+        <div class="placeholder-icon">+</div>
+        <p>Register New Product</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deployment Status Panel -->
+  <div class="deployment-status">
+    <h3>Recent Deployments</h3>
+    <div class="deployment-list">
+      <div class="deployment-item">
+        <div class="deployment-info">
+          <span class="product-name">MailSense</span>
+          <span class="deployment-id">#deploy-1234</span>
+        </div>
+        <div class="deployment-status-badge success">Completed</div>
+        <div class="deployment-time">2 hours ago</div>
+      </div>
+      <div class="deployment-item">
+        <div class="deployment-info">
+          <span class="product-name">Analytics Pro</span>
+          <span class="deployment-id">#deploy-1233</span>
+        </div>
+        <div class="deployment-status-badge in-progress">Deploying</div>
+        <div class="deployment-time">5 minutes ago</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-manager {
+    padding: 2rem;
+  }
+
+  .product-manager__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .product-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+  }
+
+  .product-card.placeholder {
+    border: 2px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .product-card.placeholder:hover {
+    border-color: var(--accent-primary);
+    background: rgba(59, 130, 246, 0.05);
+  }
+
+  .placeholder-content {
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+  }
+
+  .product-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-primary);
+    border-radius: 12px;
+  }
+
+  .product-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+  }
+
+  .product-info p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  .product-status {
+    margin-left: auto;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .status-active {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .status-pending {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--warning);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+  }
+
+  .product-card__details {
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .detail-row .label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  .detail-row .value {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .product-card__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .deployment-status {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .deployment-status h3 {
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .deployment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .deployment-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+  }
+
+  .deployment-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .product-name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .deployment-id {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'Monaco', 'Menlo', monospace;
+  }
+
+  .deployment-status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deployment-status-badge.success {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+  }
+
+  .deployment-status-badge.in-progress {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--accent-primary);
+  }
+
+  .deployment-time {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  // Product management functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add product button handlers
+    document.querySelectorAll('[data-action="add-product"]').forEach(button => {
+      button.addEventListener('click', openProductModal);
+    });
+
+    // Deploy button handlers
+    document.querySelectorAll('[data-action="deploy"]').forEach(button => {
+      button.addEventListener('click', handleDeploy);
+    });
+
+    // Configure button handlers
+    document.querySelectorAll('[data-action="configure"]').forEach(button => {
+      button.addEventListener('click', handleConfigure);
+    });
+
+    // Logs button handlers
+    document.querySelectorAll('[data-action="logs"]').forEach(button => {
+      button.addEventListener('click', handleLogs);
+    });
+  });
+
+  function openProductModal() {
+    // TODO: Open modal for product registration
+    console.log('Opening product registration modal');
+  }
+
+  function handleDeploy(event) {
+    const productId = event.target.dataset.product;
+    console.log(`Deploying product: ${productId}`);
+    // TODO: Trigger deployment API call
+  }
+
+  function handleConfigure(event) {
+    const productId = event.target.dataset.product;
+    console.log(`Configuring product: ${productId}`);
+    // TODO: Open configuration panel
+  }
+
+  function handleLogs(event) {
+    const productId = event.target.dataset.product;
+    console.log(`Viewing logs for product: ${productId}`);
+    // TODO: Open logs viewer
+  }
+</script>

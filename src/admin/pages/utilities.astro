@@ -1,0 +1,575 @@
+---
+import Layout from '../../core/layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="System Utilities - Admin Dashboard">
+  <Header />
+  
+  <main class="min-h-screen bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">System Utilities</h1>
+        <p class="text-gray-600">Database maintenance, system health, and operational tools</p>
+      </div>
+
+      <!-- System Health Section -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900">System Health Check</h2>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div id="health-status" class="space-y-4">
+              <!-- Health status will be loaded here -->
+            </div>
+          </div>
+          <button onclick="runHealthCheck()" class="btn btn-primary">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Run Health Check
+          </button>
+        </div>
+      </div>
+
+      <!-- Database Maintenance -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900">Database Maintenance</h2>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- D1 Database Operations -->
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Cloudflare D1 Operations</h3>
+              <div class="space-y-3">
+                <button onclick="runDatabaseCleanup('d1')" class="btn btn-secondary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Clean Expired Sessions
+                </button>
+                <button onclick="optimizeDatabase('d1')" class="btn btn-secondary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  Optimize Tables
+                </button>
+                <button onclick="backupDatabase('d1')" class="btn btn-primary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                  </svg>
+                  Create Backup
+                </button>
+              </div>
+            </div>
+
+            <!-- Supabase Operations -->
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Supabase Operations</h3>
+              <div class="space-y-3">
+                <button onclick="runDatabaseCleanup('supabase')" class="btn btn-secondary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Clean Auth Logs
+                </button>
+                <button onclick="syncUserProfiles()" class="btn btn-secondary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Sync User Profiles
+                </button>
+                <button onclick="validateDataIntegrity()" class="btn btn-primary w-full">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Validate Integrity
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operation Log -->
+          <div class="mt-8">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Operation Log</h3>
+            <div id="operation-log" class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm h-64 overflow-y-auto">
+              <div class="text-gray-500">System ready. Awaiting commands...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cache Management -->
+      <div class="bg-white rounded-lg shadow mb-8">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900">Cache Management</h2>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-gray-900 mb-2">API Cache</h3>
+              <p class="text-sm text-gray-600 mb-4">Clear API response cache</p>
+              <button onclick="clearCache('api')" class="btn btn-secondary">Clear API Cache</button>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-gray-900 mb-2">Session Cache</h3>
+              <p class="text-sm text-gray-600 mb-4">Clear user session cache</p>
+              <button onclick="clearCache('session')" class="btn btn-secondary">Clear Session Cache</button>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-medium text-gray-900 mb-2">All Caches</h3>
+              <p class="text-sm text-gray-600 mb-4">Clear all cached data</p>
+              <button onclick="clearCache('all')" class="btn btn-destructive">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Configuration -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900">System Configuration</h2>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Rate Limiting -->
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Rate Limiting</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">API Requests per Minute</label>
+                  <input id="api-rate-limit" type="number" value="100" class="form-input">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Login Attempts per Hour</label>
+                  <input id="login-rate-limit" type="number" value="10" class="form-input">
+                </div>
+                <button onclick="updateRateLimit()" class="btn btn-primary">Update Rate Limits</button>
+              </div>
+            </div>
+
+            <!-- Maintenance Mode -->
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Maintenance Mode</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <p class="font-medium text-gray-900">Maintenance Mode</p>
+                    <p class="text-sm text-gray-600">Enable to block all user access</p>
+                  </div>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input id="maintenance-toggle" type="checkbox" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Maintenance Message</label>
+                  <textarea id="maintenance-message" class="form-input h-24" placeholder="System is currently under maintenance..."></textarea>
+                </div>
+                
+                <button onclick="updateMaintenanceMode()" class="btn btn-primary">Update Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white rounded-lg shadow-xl p-6">
+          <div class="flex items-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-4"></div>
+            <div>
+              <p class="text-lg font-medium text-gray-900">Processing Operation</p>
+              <p id="loading-message" class="text-sm text-gray-600">Please wait...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let healthCheckInterval;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSystemHealth();
+    });
+
+    async function loadSystemHealth() {
+      try {
+        const response = await fetch('/api/admin/health', {
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          displayHealthStatus(data.data);
+        }
+      } catch (error) {
+        logOperation('Failed to load system health', 'error');
+      }
+    }
+
+    function displayHealthStatus(healthData) {
+      const container = document.getElementById('health-status');
+      if (!container) return;
+      
+      const services = [
+        { name: 'Database (D1)', status: healthData.database.d1_status, latency: `${healthData.database.d1_latency}ms` },
+        { name: 'Database (Supabase)', status: healthData.database.supabase_status, latency: `${healthData.database.supabase_latency}ms` },
+        { name: 'API Endpoints', status: healthData.api.status, response: `${healthData.api.avg_response_time}ms` }
+      ];
+
+      container.innerHTML = services.map(service => {
+        const statusColor = service.status === 'healthy' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+        const statusIcon = service.status === 'healthy' ? '✓' : '✗';
+
+        return `
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-medium text-gray-900">${service.name}</h4>
+              <span class="px-2 py-1 text-xs font-semibold rounded-full ${statusColor}">
+                ${statusIcon} ${service.status}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600">
+              ${service.latency ? `Latency: ${service.latency}` : `Response: ${service.response}`}
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function runHealthCheck() {
+      showLoading('Running comprehensive health check...');
+      
+      try {
+        const response = await fetch('/api/admin/health', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation('Health check completed successfully', 'success');
+          displayHealthStatus(data.data);
+        } else {
+          logOperation('Health check failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Health check error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function runDatabaseCleanup(database) {
+      const operation = database === 'd1' ? 'D1 cleanup' : 'Supabase cleanup';
+      showLoading(`Running ${operation}...`);
+      
+      try {
+        const response = await fetch(`/api/admin/database/cleanup`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ database })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`${operation} completed: ${data.message}`, 'success');
+        } else {
+          logOperation(`${operation} failed`, 'error');
+        }
+      } catch (error) {
+        logOperation(`${operation} error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function optimizeDatabase(database) {
+      showLoading(`Optimizing ${database} database...`);
+      
+      try {
+        const response = await fetch(`/api/admin/database/optimize`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ database })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`Database optimization completed: ${data.message}`, 'success');
+        } else {
+          logOperation('Database optimization failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Database optimization error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function backupDatabase(database) {
+      showLoading(`Creating ${database} backup...`);
+      
+      try {
+        const response = await fetch(`/api/admin/database/backup`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ database })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`Backup created successfully: ${data.backup_id}`, 'success');
+        } else {
+          logOperation('Backup creation failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Backup error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function syncUserProfiles() {
+      showLoading('Syncing user profiles between databases...');
+      
+      try {
+        const response = await fetch('/api/admin/users/sync', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`Profile sync completed: ${data.synced} profiles updated`, 'success');
+        } else {
+          logOperation('Profile sync failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Profile sync error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function validateDataIntegrity() {
+      showLoading('Validating data integrity across systems...');
+      
+      try {
+        const response = await fetch('/api/admin/database/validate', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`Data validation completed: ${data.issues} issues found`, 
+                      data.issues > 0 ? 'warning' : 'success');
+        } else {
+          logOperation('Data validation failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Data validation error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function clearCache(cacheType) {
+      showLoading(`Clearing ${cacheType} cache...`);
+      
+      try {
+        const response = await fetch('/api/admin/cache/clear', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ cache_type: cacheType })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          logOperation(`Cache cleared: ${data.message}`, 'success');
+        } else {
+          logOperation('Cache clear failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Cache clear error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function updateRateLimit() {
+      const apiLimitElement = document.getElementById('api-rate-limit') as HTMLInputElement;
+      const loginLimitElement = document.getElementById('login-rate-limit') as HTMLInputElement;
+      if (!apiLimitElement || !loginLimitElement) return;
+      
+      const apiLimit = apiLimitElement.value;
+      const loginLimit = loginLimitElement.value;
+      
+      showLoading('Updating rate limits...');
+      
+      try {
+        const response = await fetch('/api/admin/config/rate-limit', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            api_requests_per_minute: parseInt(apiLimit),
+            login_attempts_per_hour: parseInt(loginLimit)
+          })
+        });
+
+        if (response.ok) {
+          logOperation('Rate limits updated successfully', 'success');
+        } else {
+          logOperation('Rate limit update failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Rate limit update error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    async function updateMaintenanceMode() {
+      const toggleElement = document.getElementById('maintenance-toggle') as HTMLInputElement;
+      const messageElement = document.getElementById('maintenance-message') as HTMLTextAreaElement;
+      if (!toggleElement || !messageElement) return;
+      
+      const enabled = toggleElement.checked;
+      const message = messageElement.value;
+      
+      showLoading('Updating maintenance mode...');
+      
+      try {
+        const response = await fetch('/api/admin/config/maintenance', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer admin-token',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            enabled,
+            message
+          })
+        });
+
+        if (response.ok) {
+          logOperation(`Maintenance mode ${enabled ? 'enabled' : 'disabled'}`, 'success');
+        } else {
+          logOperation('Maintenance mode update failed', 'error');
+        }
+      } catch (error) {
+        logOperation(`Maintenance mode update error: ${error.message}`, 'error');
+      }
+      
+      hideLoading();
+    }
+
+    function logOperation(message: string, type = 'info') {
+      const log = document.getElementById('operation-log');
+      if (!log) return;
+      
+      const timestamp = new Date().toLocaleTimeString();
+      const typeColors: { [key: string]: string } = {
+        info: 'text-blue-400',
+        success: 'text-green-400',
+        warning: 'text-yellow-400',
+        error: 'text-red-400'
+      };
+      
+      const logEntry = document.createElement('div');
+      logEntry.className = typeColors[type] || 'text-gray-400';
+      logEntry.textContent = `[${timestamp}] ${message}`;
+      
+      log.appendChild(logEntry);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function showLoading(message: string) {
+      const loadingMessage = document.getElementById('loading-message');
+      const loadingModal = document.getElementById('loading-modal');
+      if (loadingMessage) loadingMessage.textContent = message;
+      if (loadingModal) loadingModal.classList.remove('hidden');
+    }
+
+    function hideLoading() {
+      const loadingModal = document.getElementById('loading-modal');
+      if (loadingModal) loadingModal.classList.add('hidden');
+    }
+  </script>
+
+  <style>
+    .btn {
+      @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+    }
+    
+    .btn-primary {
+      @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+    }
+    
+    .btn-secondary {
+      @apply text-gray-700 bg-white hover:bg-gray-50 border-gray-300 focus:ring-blue-500;
+    }
+    
+    .btn-destructive {
+      @apply text-white bg-red-600 hover:bg-red-700 focus:ring-red-500;
+    }
+    
+    .form-input {
+      @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+    }
+  </style>
+</Layout>

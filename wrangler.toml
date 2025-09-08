@@ -1,64 +1,48 @@
+# Unified Nyuchi Platform Worker
 name = "nyuchi-platform"
-main = "dist/_worker.js"
-compatibility_date = "2024-01-01"
+main = "./dist/_worker.js"
+compatibility_date = "2024-12-01"
 
+# Enable observability logs
+[observability.logs]
+enabled = true
+
+# Production environment
 [env.production]
 name = "nyuchi-platform-prod"
-route = "api.nyuchi.com/*"
-zone_id = "your-zone-id"
+routes = [
+  "www.nyuchi.com/*",
+  "nyuchi.com/*"
+]
+zone_id = "049bd85976a3767c9bfa4aaee38fc937"
 
-[env.staging]
-name = "nyuchi-platform-staging"
-route = "staging.api.nyuchi.com/*"
-zone_id = "your-zone-id"
-
-# D1 Database for application data (following Cloudflare SaaS template)
-[[d1_databases]]
-binding = "DB"
-database_name = "nyuchi-platform-db"
-database_id = "49a06c1c-05c0-408b-b8f7-5835a89b0d4c"
-migrations_dir = "database/migrations/d1"
+# Preview environment
+[env.preview]
+name = "nyuchi-platform-preview"
+routes = [
+  "preview.nyuchi.com/*"
+]
+zone_id = "049bd85976a3767c9bfa4aaee38fc937"
 
 # Environment variables
 [vars]
-# Supabase configuration
-SUPABASE_URL = "your-supabase-url"
-SUPABASE_ANON_KEY = "your-supabase-anon-key"
-SUPABASE_SERVICE_ROLE_KEY = "your-supabase-service-role-key" 
-SUPABASE_JWT_SECRET = "your-supabase-jwt-secret"
-SUPABASE_BUCKET_NAME = "nyuchi-storage"
-
-# Cloudflare configuration
-CLOUDFLARE_ACCOUNT_ID = "your-cloudflare-account-id"
-CLOUDFLARE_API_TOKEN = "your-cloudflare-api-token"
-D1_DATABASE_NAME = "nyuchi-platform-db"
-
-# Application configuration
-ENVIRONMENT = "development"
-NODE_ENV = "development"
-
-# Feature flags
-ENABLE_D1_BACKUP = "false"
-ENABLE_SUPABASE_FUNCTIONS = "true"
-ENABLE_REPLICATION = "false"
-
-# Product-specific API keys
-MAIL_ORGANIZER_API_KEY = "your-mail-organizer-api-key"
-SEO_MANAGER_API_KEY = "your-seo-manager-api-key"
-ANALYTICS_PRO_API_KEY = "your-analytics-pro-api-key"
-
-# External service integrations
-GMAIL_CLIENT_ID = "your-gmail-client-id"
-GMAIL_CLIENT_SECRET = "your-gmail-client-secret"
-WORDPRESS_API_BASE = "your-wordpress-api-base"
-
-# Production overrides
-[env.production.vars]
-ENVIRONMENT = "production"
 NODE_ENV = "production"
-ENABLE_D1_BACKUP = "true"
+ASTRO_BUILD = "true"
 
-# Staging overrides
-[env.staging.vars]
-ENVIRONMENT = "staging"
-NODE_ENV = "staging"
+# KV storage for session data
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "session_kv_id"
+preview_id = "session_kv_preview_id"
+
+# D1 database
+[[d1_databases]]
+binding = "DB"
+database_name = "nyuchi-db"
+database_id = "database_id_here"
+
+# R2 bucket for file storage
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "nyuchi-storage"
+preview_bucket_name = "nyuchi-storage-preview"

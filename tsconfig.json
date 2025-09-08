@@ -22,8 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/ui/*": ["./packages/ui/src/*"],
-      "@/utils/*": ["./packages/utils/src/*"],
+      "@/ui/*": ["./core/ui/src/*"],
+      "@/utils/*": ["./core/utils/*"],
       "@/supabase/*": ["./packages/supabase/src/*"]
     }
   },
