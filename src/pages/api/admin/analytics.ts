@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { requireSuperAdmin, createCustomerError, createSuccessResponse } from '../../../lib/auth';
-import { SECURITY_HEADERS } from '../../../lib/validation';
+import { requireSuperAdmin, createCustomerError, createSuccessResponse } from '../../../../core/lib/auth';
+import { SECURITY_HEADERS } from '../../../../core/lib/validation';
 
 export const GET: APIRoute = async ({ request, locals }: { request: Request; locals: any }) => {
   // Super admin access required

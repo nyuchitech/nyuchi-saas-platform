@@ -1,39 +1,12 @@
 ---
 // Login page for dashboard authentication
+import MarketingLayout from '../../core/layouts/MarketingLayout.astro';
 const title = 'Login - Nyuchi Africa';
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Login to access your Nyuchi Africa dashboard" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  
-  <!-- Typography - Roboto for body, Playfair Display for headings -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  
-  <!-- Marketing-specific CSS for consistent styling -->
-  <link rel="stylesheet" href="/src/marketing/styles/marketing.css" />
-  
-  <title>{title}</title>
-</head>
-
-<body class="bg-black text-white antialiased">
-  <!-- Zimbabwe Flag Brand Strip -->
-  <div class="zimbabwe-flag-strip">
-    <div class="flag-green"></div>
-    <div class="flag-yellow"></div>
-    <div class="flag-red"></div>
-    <div class="flag-black"></div>
-  </div>
-  
+<MarketingLayout title={title} description="Login to access your Nyuchi Africa dashboard">
   <!-- Login Container -->
-  <div class="min-h-screen flex items-center justify-center pl-8">
+  <div class="min-h-screen flex items-center justify-center pt-20">
     <div class="max-w-md w-full space-y-8">
       <!-- Logo and Header -->
       <div class="text-center">
@@ -206,5 +179,4 @@ const title = 'Login - Nyuchi Africa';
       window.location.href = '/dashboard';
     }
   </script>
-</body>
-</html>
+</MarketingLayout>

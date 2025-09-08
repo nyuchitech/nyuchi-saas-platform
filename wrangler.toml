@@ -1,48 +1,75 @@
-# Unified Nyuchi Platform Worker
+# Nyuchi Africa Platform - Single Worker with Subdomain Routing
 name = "nyuchi-platform"
 main = "./dist/_worker.js"
 compatibility_date = "2024-12-01"
+workers_dev = false
 
-# Enable observability logs
-[observability.logs]
-enabled = true
+# Observability
+[observability]
+  [observability.logs]
+  enabled = true
 
-# Production environment
+# Production Environment
 [env.production]
 name = "nyuchi-platform-prod"
-routes = [
-  "www.nyuchi.com/*",
-  "nyuchi.com/*"
-]
 zone_id = "049bd85976a3767c9bfa4aaee38fc937"
-
-# Preview environment
-[env.preview]
-name = "nyuchi-platform-preview"
 routes = [
-  "preview.nyuchi.com/*"
+  # Marketing Site
+  { pattern = "nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "www.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  
+  # Platform Subdomains
+  { pattern = "dashboard.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "admin.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "identity.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "account.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" }
 ]
-zone_id = "049bd85976a3767c9bfa4aaee38fc937"
 
-# Environment variables
-[vars]
+[env.production.vars]
+ENVIRONMENT = "production"
 NODE_ENV = "production"
 ASTRO_BUILD = "true"
+SUPABASE_URL = "https://zylxjonmgjvqursoxdde.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MDk2MTgsImV4cCI6MjA3MTE4NTYxOH0.LZDuNNKUhL_yLB2T9Ln0T2VBjogzx3XQz8-lbuFIl8A"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYwOTYxOCwiZXhwIjoyMDcxMTg1NjE4fQ.jeEUyA8y97KkuOcuutQAVkF0erDyGF_llrt5bwIlrfI"
+ANALYTICS_ENABLED = "true"
 
-# KV storage for session data
+# Preview Environment  
+[env.preview]
+name = "nyuchi-platform-preview"
+zone_id = "049bd85976a3767c9bfa4aaee38fc937"
+routes = [
+  { pattern = "preview.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "preview-dashboard.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
+  { pattern = "preview-admin.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" }
+]
+
+[env.preview.vars]
+ENVIRONMENT = "preview"
+NODE_ENV = "production"
+ASTRO_BUILD = "true"
+SUPABASE_URL = "https://zylxjonmgjvqursoxdde.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MDk2MTgsImV4cCI6MjA3MTE4NTYxOH0.LZDuNNKUhL_yLB2T9Ln0T2VBjogzx3XQz8-lbuFIl8A"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYwOTYxOCwiZXhwIjoyMDcxMTg1NjE4fQ.jeEUyA8y97KkuOcuutQAVkF0erDyGF_llrt5bwIlrfI"
+ANALYTICS_ENABLED = "false"
+
+# KV Namespaces for session management
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "session_kv_id"
-preview_id = "session_kv_preview_id"
+id = "nyuchi_sessions_prod"
+preview_id = "nyuchi_sessions_preview"
 
-# D1 database
-[[d1_databases]]
-binding = "DB"
-database_name = "nyuchi-db"
-database_id = "database_id_here"
+[[kv_namespaces]]
+binding = "CACHE"
+id = "nyuchi_cache_prod"
+preview_id = "nyuchi_cache_preview"
 
-# R2 bucket for file storage
+# R2 Storage for file uploads
 [[r2_buckets]]
 binding = "STORAGE"
 bucket_name = "nyuchi-storage"
 preview_bucket_name = "nyuchi-storage-preview"
+
+# AI Bindings (when available)
+# [[ai]]
+# binding = "AI"

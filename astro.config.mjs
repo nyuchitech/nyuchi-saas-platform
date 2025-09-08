@@ -17,7 +17,7 @@ export default defineConfig({
     imageService: 'compile',
   }),
   integrations: [tailwind()],
-  output: 'hybrid',
+  output: 'server',
   srcDir: './src',
   publicDir: './public',
   outDir: './dist',

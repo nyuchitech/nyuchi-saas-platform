@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../lib/auth';
+import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../../core/lib/auth';
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
   try {

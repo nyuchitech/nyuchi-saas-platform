@@ -1,8 +1,8 @@
 // Authentication and authorization utilities
 // Based on Cloudflare SaaS admin template architecture
 
-import { supabaseAdmin } from '../../database/clients/supabase';
-import { DATABASE_CONFIG } from '../../database/config';
+import { supabaseAdmin } from '../database/clients/supabase';
+import { DATABASE_CONFIG } from '../database/config';
 
 export type UserRole = 'super_admin' | 'admin' | 'manager' | 'user' | 'viewer';
 

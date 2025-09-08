@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-import { getPaymentService } from '../../../lib/payments/service';
-import { requireAuth } from '../../../lib/auth';
+import { getPaymentService } from '../../../../core/lib/payments/service';
+import { requireAuth } from '../../../../core/lib/auth';
 import { D1Client } from '../../../../../core/database/clients/d1';
 
 export const POST: APIRoute = async ({ request, locals }) => {

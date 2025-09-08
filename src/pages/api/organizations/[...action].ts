@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { requireAuth, requireAdmin, requireSuperAdmin, hasPermission, createCustomerError, createSuccessResponse, ROLE_HIERARCHY, UserRole } from '../../../lib/auth';
+import { requireAuth, requireAdmin, requireSuperAdmin, hasPermission, createCustomerError, createSuccessResponse, ROLE_HIERARCHY, UserRole } from '../../../../core/lib/auth';
 
 export const prerender = false;
 import { 
@@ -9,7 +9,7 @@ import {
   sanitizeHtml,
   SECURITY_HEADERS,
   validateJsonSize
-} from '../../../lib/validation';
+} from '../../../../core/lib/validation';
 
 export const POST: APIRoute = async ({ request, locals }: { request: Request; locals: any }) => {
   try {

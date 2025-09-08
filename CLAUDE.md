@@ -57,25 +57,33 @@ npm run test:connections # Test all database connections
 ```
 
 ### Deployment
+
+**⚠️ OAuth Authentication Required**: Cloudflare deployments now use OAuth instead of API tokens for full DNS management permissions.
+
 ```bash
-# Deploy individual services
-npm run deploy:marketing production   # Marketing site only
-npm run deploy:admin production      # Admin dashboard only
-npm run deploy:dashboard production  # Customer dashboard only
+# First-time setup: OAuth login (opens browser)
+npx wrangler login
 
-# Deploy all services (use with caution)
-npm run deploy:all production        # Deploys all subdomains
+# Deploy individual services with OAuth
+npx wrangler deploy --env production --config ./workers/marketing/wrangler.toml
+npx wrangler deploy --env production --config ./workers/dashboard/wrangler.toml  
+npx wrangler deploy --env production --config ./workers/admin/wrangler.toml
 
-# Deploy to staging
-npm run deploy:marketing staging
-npm run deploy:admin staging
-npm run deploy:dashboard staging
+# Deploy to preview environment
+npx wrangler deploy --env preview --config ./workers/marketing/wrangler.toml
+npx wrangler deploy --env preview --config ./workers/dashboard/wrangler.toml
+npx wrangler deploy --env preview --config ./workers/admin/wrangler.toml
 
 # Local Cloudflare testing
-wrangler dev                    # Test marketing (main)
-cd workers/admin && wrangler dev    # Test admin
-cd workers/dashboard && wrangler dev # Test dashboard
+wrangler dev --config ./workers/marketing/wrangler.toml
+wrangler dev --config ./workers/dashboard/wrangler.toml  
+wrangler dev --config ./workers/admin/wrangler.toml
 ```
+
+**Domain Configuration**: Workers automatically attach to domains via routes configured in wrangler.toml:
+- `www.nyuchi.com/*` → Marketing Worker
+- `dashboard.nyuchi.com/*` → Dashboard Worker  
+- `admin.nyuchi.com/*` → Admin Worker
 
 ### Linting & Type Checking
 The project uses ESLint and TypeScript. Always run these before committing:
@@ -258,6 +266,31 @@ const { data, error } = await supabase
 - **packages/wordpress-plugin/**: SEO Manager WordPress integration
 - **packages/utils/**: Shared utilities and helpers
 
+## Recent Changes & Updates
+
+### Domain Configuration & OAuth Setup (Latest)
+- **OAuth Authentication**: Switched from limited API tokens to full OAuth authentication for Cloudflare deployments
+- **Domain Attachment**: Workers now automatically attach to custom domains via wrangler.toml routes configuration
+- **Zone Management**: Fixed zone_id configuration (049bd85976a3767c9bfa4aaee38fc937) for nyuchi.com domain
+- **Centralized Configuration**: Removed duplicate wrangler.toml files and cleaned up project structure
+- **Authentication Flow**: Environment-aware authentication redirects for preview vs production domains
+
+### Environment Configuration
+```bash
+# OAuth Login (required for domain management)
+npx wrangler login
+
+# Environment Variables
+# - Removed CLOUDFLARE_API_TOKEN from .env.local (uses OAuth now)
+# - Supabase configuration centralized in /config/supabase.ts
+```
+
+### Domain Setup Status
+- ✅ **Workers Deployed**: All three workers deployed with correct routes
+- ✅ **OAuth Authentication**: Full permissions for DNS management  
+- ✅ **Zone Configuration**: Correct zone_id for nyuchi.com domain
+```
+
 ## Important Files
 
 - `database/index.ts` - Unified database client and manager
@@ -265,5 +298,6 @@ const { data, error } = await supabase
 - `src/lib/validation.ts` - Input validation schemas and security utilities
 - `src/lib/security.ts` - Rate limiting and security headers
 - `astro.config.mjs` - Cloudflare adapter configuration
-- `wrangler.toml` - Cloudflare Workers configuration
+- `workers/*/wrangler.toml` - Cloudflare Workers configuration per service
 - `turbo.json` - Monorepo build pipeline
+- `DOMAIN_SETUP_STATUS.md` - Current domain configuration status and next steps

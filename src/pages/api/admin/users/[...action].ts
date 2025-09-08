@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { requireAdmin, requireSuperAdmin, hasPermission, canManageUser, createCustomerError, createSuccessResponse, ROLE_HIERARCHY, type UserRole } from '../../../../lib/auth';
+import { requireAdmin, requireSuperAdmin, hasPermission, canManageUser, createCustomerError, createSuccessResponse, ROLE_HIERARCHY, type UserRole } from '../../../../../core/lib/auth';
 
 export const prerender = false;
 

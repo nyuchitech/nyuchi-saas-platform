@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../lib/auth';
+import { requireAuth, createCustomerError, createSuccessResponse, hasPermission, PRODUCT_PERMISSIONS } from '../../../../core/lib/auth';
 import { 
   validateRequest, 
   EmailAccountSchema, 
@@ -10,7 +10,7 @@ import {
   sanitizeHtml,
   SECURITY_HEADERS,
   validateJsonSize
-} from '../../../lib/validation';
+} from '../../../../core/lib/validation';
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
   try {

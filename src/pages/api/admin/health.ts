@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { requireAdmin } from '../../../lib/auth';
+import { requireAdmin } from '../../../../core/lib/auth';
 
 // Admin-only health check endpoint - GET for quick status
 export const GET: APIRoute = async ({ request, locals }) => {

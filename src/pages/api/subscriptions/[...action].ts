@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-import { requireAuth, requireAdmin, createCustomerError, createSuccessResponse, hasPermission } from '../../../lib/auth';
+import { requireAuth, requireAdmin, createCustomerError, createSuccessResponse, hasPermission } from '../../../../core/lib/auth';
 import { 
   validateRequest, 
   sanitizeHtml,
   SECURITY_HEADERS,
   validateJsonSize
-} from '../../../lib/validation';
+} from '../../../../core/lib/validation';
 import { z } from 'zod';
 
 // Subscription schemas

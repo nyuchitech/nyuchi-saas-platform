@@ -1,5 +1,5 @@
 ---
-// Dynamic Header component with responsive navigation
+// Enterprise-grade Header component inspired by Workday, Salesforce, AWS
 export interface Props {
   appType?: 'marketing' | 'dashboard' | 'admin';
   currentPath?: string;
@@ -7,57 +7,94 @@ export interface Props {
 
 const { appType = 'marketing', currentPath = '/' } = Astro.props;
 
-// Define navigation items with nesting support
+// Define navigation with enterprise-style mega menu structure
 const getNavItems = (type: string) => {
   switch (type) {
     case 'marketing':
       return [
         { 
-          href: '#', 
-          label: 'Projects',
+          href: '/solutions', 
+          label: 'Solutions',
           hasDropdown: true,
-          dropdownItems: [
-            { href: '/travel-platform', label: 'Travel Platform' },
-            { href: '/harare-metro', label: 'Harare Metro' },
-            { href: '/mukoko', label: 'Mukoko' }
+          dropdownType: 'mega',
+          megaItems: [
+            {
+              category: 'By Industry',
+              items: [
+                { href: '/travel-platform', label: 'Travel & Tourism', description: 'Complete travel management ecosystem', icon: '✈️' },
+                { href: '/harare-metro', label: 'Urban Mobility', description: 'Metropolitan transport solutions', icon: '🚊' },
+                { href: '/mukoko', label: 'Rural Development', description: 'Empowering rural communities', icon: '🏘️' }
+              ]
+            },
+            {
+              category: 'By Function',
+              items: [
+                { href: '/mail-organizer', label: 'Email Management', description: 'AI-powered inbox organization', icon: '📧' },
+                { href: '/seo-manager', label: 'Digital Marketing', description: 'SEO and content optimization', icon: '📈' },
+                { href: '/analytics-pro', label: 'Business Intelligence', description: 'Data-driven insights', icon: '📊' }
+              ]
+            }
           ]
         },
         { 
-          href: '#', 
+          href: '/products', 
           label: 'Products',
           hasDropdown: true,
           dropdownItems: [
-            { href: '/mail-organizer', label: 'Mail Organizer' },
-            { href: '/seo-manager', label: 'SEO Manager' },
-            { href: '/content-hub', label: 'Content Hub' },
-            { href: '/analytics-pro', label: 'Analytics Pro' }
+            { href: '/products/enterprise', label: 'Enterprise Suite', description: 'Full-scale business platform' },
+            { href: '/products/sme', label: 'SME Solutions', description: 'Small-medium business tools' },
+            { href: '/products/developer', label: 'Developer Tools', description: 'APIs and integrations' },
+            { href: '/products/mobile', label: 'Mobile Apps', description: 'iOS and Android solutions' }
           ]
         },
         { 
-          href: '#', 
-          label: 'About',
+          href: '/resources', 
+          label: 'Resources',
           hasDropdown: true,
           dropdownItems: [
-            { href: '/blog', label: 'Blog' },
-            { href: '/contact', label: 'Contact' },
-            { href: '/about', label: 'About Company' },
-            { href: '/support', label: 'Support' }
+            { href: '/blog', label: 'Blog', description: 'Latest insights and updates' },
+            { href: '/case-studies', label: 'Case Studies', description: 'Success stories from Africa' },
+            { href: '/documentation', label: 'Documentation', description: 'Technical guides and APIs' },
+            { href: '/webinars', label: 'Webinars', description: 'Live and recorded sessions' },
+            { href: '/support', label: 'Support Center', description: 'Help and troubleshooting' }
+          ]
+        },
+        { 
+          href: '/company', 
+          label: 'Company',
+          hasDropdown: true,
+          dropdownItems: [
+            { href: '/about', label: 'About Us', description: 'Our mission and story' },
+            { href: '/leadership', label: 'Leadership', description: 'Meet our team' },
+            { href: '/careers', label: 'Careers', description: 'Join our team' },
+            { href: '/contact', label: 'Contact', description: 'Get in touch' },
+            { href: '/press', label: 'Press Kit', description: 'Media resources' }
           ]
         }
       ];
     case 'dashboard':
       return [
-        { href: '/dashboard', label: 'Dashboard' },
-        { href: '/dashboard/mailsense', label: 'MailSense' },
-        { href: '/dashboard/billing', label: 'Billing' },
-        { href: '/dashboard/payments', label: 'Payments' }
+        { href: '/dashboard', label: 'Overview', icon: '📊' },
+        { 
+          href: '/dashboard/products', 
+          label: 'Products',
+          hasDropdown: true,
+          dropdownItems: [
+            { href: '/dashboard/mailsense', label: 'MailSense', description: 'Email analytics' },
+            { href: '/dashboard/seo-tools', label: 'SEO Tools', description: 'Website optimization' },
+            { href: '/dashboard/content-hub', label: 'Content Hub', description: 'Content management' }
+          ]
+        },
+        { href: '/dashboard/analytics', label: 'Analytics', icon: '📈' },
+        { href: '/dashboard/billing', label: 'Billing', icon: '💳' }
       ];
     case 'admin':
       return [
-        { href: '/admin', label: 'Overview' },
-        { href: '/admin/users', label: 'Users' },
-        { href: '/admin/analytics', label: 'Analytics' },
-        { href: '/admin/organizations', label: 'Organizations' }
+        { href: '/admin', label: 'Overview', icon: '🏠' },
+        { href: '/admin/users', label: 'Users', icon: '👥' },
+        { href: '/admin/organizations', label: 'Organizations', icon: '🏢' },
+        { href: '/admin/analytics', label: 'System Analytics', icon: '📊' },
+        { href: '/admin/settings', label: 'Settings', icon: '⚙️' }
       ];
     default:
       return [];
@@ -66,21 +103,23 @@ const getNavItems = (type: string) => {
 
 const navItems = getNavItems(appType);
 
-// Define CTA buttons based on app type
+// Define CTA buttons with enterprise styling
 const getCtaButtons = (type: string) => {
   switch (type) {
     case 'marketing':
       return [
-        { href: 'https://dashboard.nyuchi.com', label: 'Dashboard', variant: 'primary' }
+        { href: '/contact', label: 'Contact Sales', variant: 'secondary', icon: '💬' },
+        { href: 'https://dashboard.nyuchi.com', label: 'Get Started', variant: 'primary', icon: '🚀' }
       ];
     case 'dashboard':
       return [
-        { href: '/login', label: 'Logout', variant: 'secondary' }
+        { href: '/dashboard/help', label: 'Help', variant: 'ghost', icon: '❓' },
+        { href: '/dashboard/profile', label: 'Profile', variant: 'profile' }
       ];
     case 'admin':
       return [
-        { href: 'https://dashboard.nyuchi.com', label: 'Dashboard', variant: 'secondary' },
-        { href: '/login', label: 'Logout', variant: 'primary' }
+        { href: '/admin/help', label: 'Help', variant: 'ghost', icon: '❓' },
+        { href: '/admin/profile', label: 'Admin Profile', variant: 'profile' }
       ];
     default:
       return [];
@@ -91,157 +130,538 @@ const ctaButtons = getCtaButtons(appType);
 ---
 
 <style>
-  /* Enhanced dropdown styling */
+  /* Enterprise Header Styles */
+  .header-enterprise {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .header-enterprise.scrolled {
+    background: rgba(0, 0, 0, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Logo and Brand */
+  .brand-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .brand-container:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    transition: all 0.2s ease;
+  }
+
+  .brand-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* Navigation Items */
+  .nav-main {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav-item:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .nav-item.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Dropdown Menus */
   .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 280px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 0;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
+    z-index: 50;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
-  
-  .group:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-  
-  /* Ensure dropdown stays open when hovering over menu items */
-  .group:hover .dropdown-menu,
+
+  .nav-item:hover .dropdown-menu,
   .dropdown-menu:hover {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
+
+  /* Mega Menu */
+  .mega-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -50%;
+    width: 600px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 50;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .nav-item:hover .mega-menu,
+  .mega-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mega-category {
+    margin-bottom: 1.5rem;
+  }
+
+  .mega-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .mega-category h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .mega-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+  }
+
+  .mega-item:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+  }
+
+  .mega-item-icon {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    margin-top: 0.125rem;
+  }
+
+  .mega-item-content h5 {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .mega-item-content p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+  }
+
+  /* Dropdown Items */
+  .dropdown-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 0 0.5rem 0.25rem;
+  }
+
+  .dropdown-item:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+  }
+
+  .dropdown-item h5 {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .dropdown-item p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+  }
+
+  /* CTA Buttons */
+  .cta-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 2rem;
+  }
+
+  .btn-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--zw-green), #007A3E);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(0, 166, 81, 0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .btn-ghost:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-menu-button span {
+    display: block;
+    height: 2px;
+    width: 1.5rem;
+    background: white;
+    margin: 0.25rem 0;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 8px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    z-index: 40;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .nav-main {
+      display: none;
+    }
+
+    .mobile-menu-button {
+      display: flex;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .cta-container {
+      margin-left: auto;
+      margin-right: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .brand-text {
+      display: none;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+    }
+
+    .cta-container {
+      gap: 0.5rem;
+    }
+
+    .btn-cta {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
 </style>
 
-<header class="nav-marketing">
-  <div class="container-marketing">
-    <div class="flex justify-between items-center h-16">
-      <!-- Logo -->
-      <div class="flex items-center">
-        <a href="/" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-          <img src="/nyuchi-logo-dark-white.png" alt="Nyuchi Logo" class="w-8 h-8 sm:w-10 sm:h-10" />
-          <span class="text-xl sm:text-2xl font-bold text-white brand-text">Nyuchi</span>
+<header class="header-enterprise fixed top-0 left-8 right-0 z-40" id="header">
+  <div class="container-nyuchi">
+    <div class="flex items-center justify-between h-18 py-2">
+      <!-- Logo and Brand -->
+      <div class="brand-container">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/nyuchi-logo-dark-white.png" alt="Nyuchi Africa" class="brand-logo" loading="eager" />
+          <span class="brand-text">Nyuchi</span>
         </a>
       </div>
 
-      <!-- Navigation - Always Visible -->
-      <div class="flex items-center">
-        <nav class="flex items-center">
-          {navItems.map((item) => (
-            item.hasDropdown ? (
-              <div class="relative group">
-                <button 
-                  class="nav-marketing-link text-sm group px-4"
-                >
-                  {item.label}
-                </button>
-                <!-- Dropdown Menu -->
-                <div class="dropdown-menu absolute top-full left-0 mt-2 w-56 bg-black/95 backdrop-blur-sm border border-gray-800 rounded-md shadow-lg z-50">
-                  <div class="py-2">
+      <!-- Main Navigation (Desktop) -->
+      <nav class="nav-main">
+        {navItems.map((item) => (
+          <div class="nav-item-wrapper">
+            {item.hasDropdown ? (
+              <div class="nav-item" data-dropdown>
+                {item.label}
+                <svg class="w-4 h-4 ml-1 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7 10l5 5 5-5z"/>
+                </svg>
+                
+                {item.dropdownType === 'mega' ? (
+                  <div class="mega-menu">
+                    {item.megaItems?.map((category) => (
+                      <div class="mega-category">
+                        <h4>{category.category}</h4>
+                        {category.items.map((megaItem) => (
+                          <a href={megaItem.href} class="mega-item">
+                            <div class="mega-item-icon">{megaItem.icon}</div>
+                            <div class="mega-item-content">
+                              <h5>{megaItem.label}</h5>
+                              <p>{megaItem.description}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div class="dropdown-menu">
                     {item.dropdownItems?.map((dropdownItem) => (
-                      <a 
-                        href={dropdownItem.href}
-                        class={`block px-4 py-2 text-sm transition-colors nav-marketing-link ${
-                          currentPath === dropdownItem.href 
-                            ? 'bg-gray-800 text-white' 
-                            : 'hover:bg-gray-800'
-                        }`}
-                      >
-                        {dropdownItem.label}
+                      <a href={dropdownItem.href} class="dropdown-item">
+                        <h5>{dropdownItem.label}</h5>
+                        {dropdownItem.description && <p>{dropdownItem.description}</p>}
                       </a>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
             ) : (
               <a 
                 href={item.href} 
-                class={`nav-marketing-link text-sm px-4 ${
-                  currentPath === item.href ? 'text-white' : ''
-                }`}
+                class={`nav-item ${currentPath === item.href ? 'active' : ''}`}
               >
+                {item.icon && <span class="mr-2">{item.icon}</span>}
                 {item.label}
               </a>
-            )
-          ))}
-        </nav>
-        
-        <!-- CTA Buttons -->
-        <div class="flex items-center ml-8">
-          {ctaButtons.map((button) => (
-            <a 
-              href={button.href} 
-              class={button.variant === 'primary' ? 'btn-nav' : 'btn-nav-secondary'}
-            >
-              {button.label}
-            </a>
-          ))}
+            )}
+          </div>
+        ))}
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="cta-container">
+        {ctaButtons.map((button) => (
+          <a 
+            href={button.href} 
+            class={`btn-cta btn-${button.variant}`}
+          >
+            {button.icon && <span>{button.icon}</span>}
+            {button.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-button" id="mobile-menu-button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="space-y-4">
+      {navItems.map((item) => (
+        <div>
+          <a href={item.href} class="block py-2 px-4 text-white hover:bg-white/5 rounded">
+            {item.label}
+          </a>
+          {item.dropdownItems && (
+            <div class="ml-4 space-y-1">
+              {item.dropdownItems.map((subItem) => (
+                <a href={subItem.href} class="block py-1 px-4 text-gray-300 hover:text-white text-sm">
+                  {subItem.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
+      ))}
+      <div class="border-t border-gray-700 pt-4">
+        {ctaButtons.map((button) => (
+          <a href={button.href} class={`btn-cta btn-${button.variant} mb-2 w-full justify-center`}>
+            {button.icon && <span>{button.icon}</span>}
+            {button.label}
+          </a>
+        ))}
       </div>
     </div>
   </div>
 </header>
 
 <script>
-  // Enhanced dropdown functionality
+  // Enterprise Header Functionality
   document.addEventListener('DOMContentLoaded', function() {
-    // Make all dropdown buttons and navigation links clickable
-    const dropdownButtons = document.querySelectorAll('.group button');
-    const navLinks = document.querySelectorAll('nav a');
-    const ctaButtons = document.querySelectorAll('.btn-nav, .btn-nav-secondary');
+    const header = document.getElementById('header');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // Header scroll effect
+    let lastScrollY = window.scrollY;
     
-    // Ensure all navigation links are clickable
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        if (this.href && this.href !== '#') {
-          window.location.href = this.href;
-        }
-      });
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
     });
-    
-    // Ensure all CTA buttons are clickable
-    ctaButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        if (this.href && this.href !== '#') {
-          window.location.href = this.href;
-        }
-      });
-    });
-    
-    // Enhanced dropdown hover functionality
-    const dropdownGroups = document.querySelectorAll('.group');
-    
-    dropdownGroups.forEach(group => {
-      const dropdown = group.querySelector('.dropdown-menu');
+
+    // Mobile menu toggle
+    mobileMenuButton?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('active');
       
-      if (dropdown) {
-        // Show dropdown on hover
-        group.addEventListener('mouseenter', function() {
-          dropdown.style.opacity = '1';
-          dropdown.style.visibility = 'visible';
-          dropdown.style.transform = 'translateY(0)';
+      // Animate hamburger
+      const spans = mobileMenuButton.querySelectorAll('span');
+      if (mobileMenu?.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+      } else {
+        spans[0].style.transform = 'rotate(0) translate(0, 0)';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'rotate(0) translate(0, 0)';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!header?.contains(e.target as Node)) {
+        mobileMenu?.classList.remove('active');
+        
+        // Reset hamburger
+        const spans = mobileMenuButton?.querySelectorAll('span');
+        if (spans) {
+          spans[0].style.transform = 'rotate(0) translate(0, 0)';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'rotate(0) translate(0, 0)';
+        }
+      }
+    });
+
+    // Smooth dropdown interactions
+    const dropdownItems = document.querySelectorAll('[data-dropdown]');
+    dropdownItems.forEach(item => {
+      const menu = item.querySelector('.dropdown-menu, .mega-menu');
+      if (menu) {
+        let hoverTimeout: NodeJS.Timeout;
+        
+        item.addEventListener('mouseenter', () => {
+          clearTimeout(hoverTimeout);
+          (menu as HTMLElement).style.opacity = '1';
+          (menu as HTMLElement).style.visibility = 'visible';
+          (menu as HTMLElement).style.transform = 'translateY(0)';
         });
         
-        // Hide dropdown when leaving
-        group.addEventListener('mouseleave', function() {
-          dropdown.style.opacity = '0';
-          dropdown.style.visibility = 'hidden';
-          dropdown.style.transform = 'translateY(-10px)';
+        item.addEventListener('mouseleave', () => {
+          hoverTimeout = setTimeout(() => {
+            (menu as HTMLElement).style.opacity = '0';
+            (menu as HTMLElement).style.visibility = 'hidden';
+            (menu as HTMLElement).style.transform = 'translateY(-10px)';
+          }, 100);
         });
         
-        // Make dropdown links clickable
-        const dropdownLinks = dropdown.querySelectorAll('a');
-        dropdownLinks.forEach(link => {
-          link.addEventListener('click', function(e) {
-            if (this.href && this.href !== '#') {
-              window.location.href = this.href;
-            }
-          });
+        menu.addEventListener('mouseenter', () => {
+          clearTimeout(hoverTimeout);
+        });
+        
+        menu.addEventListener('mouseleave', () => {
+          (menu as HTMLElement).style.opacity = '0';
+          (menu as HTMLElement).style.visibility = 'hidden';
+          (menu as HTMLElement).style.transform = 'translateY(-10px)';
         });
       }
     });
   });
 </script>
-
-

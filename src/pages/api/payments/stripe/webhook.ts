@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getPaymentService } from '../../../../lib/payments/service';
+import { getPaymentService } from '../../../../../core/lib/payments/service';
 
 // Stripe webhook endpoint
 export const POST: APIRoute = async ({ request, locals }) => {
