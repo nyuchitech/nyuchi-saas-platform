@@ -1,28 +1,46 @@
-# Nyuchi Africa Platform - Single Worker with Subdomain Routing
-name = "nyuchi-platform"
-main = "./dist/_worker.js"
+# Nyuchi Dashboard Worker - Backend/Admin Platform
+name = "nyuchi-dashboard"
+main = "./dist/_worker.js/index.js"
 compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
 workers_dev = false
 
-# Observability
-[observability]
-  [observability.logs]
-  enabled = true
+# Local development variables
+[vars]
+ENVIRONMENT = "development"
+NODE_ENV = "development"
+SUPABASE_URL = "https://zylxjonmgjvqursoxdde.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MDk2MTgsImV4cCI6MjA3MTE4NTYxOH0.LZDuNNKUhL_yLB2T9Ln0T2VBjogzx3XQz8-lbuFIl8A"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYwOTYxOCwiZXhwIjoyMDcxMTg1NjE4fQ.jeEUyA8y97KkuOcuutQAVkF0erDyGF_llrt5bwIlrfI"
+ANALYTICS_ENABLED = "false"
+
+# D1 Database for development
+[[d1_databases]]
+binding = "DB"
+database_name = "nyuchi-dashboard-db"
+database_id = "create_with_wrangler_d1_create"
+
+# KV Namespaces for development
+[[kv_namespaces]]
+binding = "SESSION"
+id = "55dc82737fd8427ebc6a8e6d405c043f"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "6541da165e384d2fbe8530ecb98f6b79"
+
+# R2 Storage for development
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "nyuchi-storage"
 
 # Production Environment
 [env.production]
-name = "nyuchi-platform-prod"
+name = "nyuchi-dashboard-prod"
 zone_id = "049bd85976a3767c9bfa4aaee38fc937"
 routes = [
-  # Marketing Site
-  { pattern = "nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "www.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  
-  # Platform Subdomains
   { pattern = "dashboard.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "admin.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "identity.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "account.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" }
+  { pattern = "admin.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" }
 ]
 
 [env.production.vars]
@@ -34,42 +52,15 @@ SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYwOTYxOCwiZXhwIjoyMDcxMTg1NjE4fQ.jeEUyA8y97KkuOcuutQAVkF0erDyGF_llrt5bwIlrfI"
 ANALYTICS_ENABLED = "true"
 
-# Preview Environment  
-[env.preview]
-name = "nyuchi-platform-preview"
-zone_id = "049bd85976a3767c9bfa4aaee38fc937"
-routes = [
-  { pattern = "preview.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "preview-dashboard.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" },
-  { pattern = "preview-admin.nyuchi.com/*", zone_id = "049bd85976a3767c9bfa4aaee38fc937" }
-]
+# Same resources for production
+[[env.production.kv_namespaces]]
+binding = "SESSION"
+id = "55dc82737fd8427ebc6a8e6d405c043f"
 
-[env.preview.vars]
-ENVIRONMENT = "preview"
-NODE_ENV = "production"
-ASTRO_BUILD = "true"
-SUPABASE_URL = "https://zylxjonmgjvqursoxdde.supabase.co"
-SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MDk2MTgsImV4cCI6MjA3MTE4NTYxOH0.LZDuNNKUhL_yLB2T9Ln0T2VBjogzx3XQz8-lbuFIl8A"
-SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHhqb25tZ2p2cXVyc294ZGRlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYwOTYxOCwiZXhwIjoyMDcxMTg1NjE4fQ.jeEUyA8y97KkuOcuutQAVkF0erDyGF_llrt5bwIlrfI"
-ANALYTICS_ENABLED = "false"
-
-# KV Namespaces for session management
-[[kv_namespaces]]
-binding = "SESSIONS"
-id = "nyuchi_sessions_prod"
-preview_id = "nyuchi_sessions_preview"
-
-[[kv_namespaces]]
+[[env.production.kv_namespaces]]
 binding = "CACHE"
-id = "nyuchi_cache_prod"
-preview_id = "nyuchi_cache_preview"
+id = "6541da165e384d2fbe8530ecb98f6b79"
 
-# R2 Storage for file uploads
-[[r2_buckets]]
+[[env.production.r2_buckets]]
 binding = "STORAGE"
 bucket_name = "nyuchi-storage"
-preview_bucket_name = "nyuchi-storage-preview"
-
-# AI Bindings (when available)
-# [[ai]]
-# binding = "AI"

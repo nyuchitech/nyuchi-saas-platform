@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 import { loadEnv } from 'vite';
 
 // Load environment variables
@@ -14,9 +15,12 @@ export default defineConfig({
       enabled: true,
       configPath: 'wrangler.toml',
     },
-    imageService: 'compile',
+    imageService: 'passthrough',
   }),
-  integrations: [tailwind()],
+  integrations: [
+    tailwind(),
+    react(),
+  ],
   output: 'server',
   srcDir: './src',
   publicDir: './public',
@@ -25,6 +29,7 @@ export default defineConfig({
     define: {
       'process.env.SUPABASE_URL': JSON.stringify(env.SUPABASE_URL || ''),
       'process.env.SUPABASE_ANON_KEY': JSON.stringify(env.SUPABASE_ANON_KEY || ''),
+      'process.env.SUPABASE_SERVICE_ROLE_KEY': JSON.stringify(env.SUPABASE_SERVICE_ROLE_KEY || ''),
     },
   },
 });

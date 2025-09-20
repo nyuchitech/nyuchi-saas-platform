@@ -22,38 +22,32 @@ Nyuchi Platform is a microservices-based SaaS ecosystem with independent subdoma
 ### Development
 ```bash
 # Microservice Development (separate ports):
-npm run dev:marketing   # Marketing site on port 4322 (www.nyuchi.com)
-npm run dev:admin      # Admin dashboard on port 4321 (admin.nyuchi.com)
-npm run dev:dashboard  # Customer dashboard on port 4323 (dashboard.nyuchi.com)
+npm run dev:frontend   # Marketing site on port 4322 (www.nyuchi.com)
+npm run dev:platform   # Customer dashboard on port 4321 (dashboard.nyuchi.com)
 
-# Legacy (still works, runs admin):
+# Legacy (still works, runs platform):
 npm run dev           # Main development server on port 4321
 
 # Build for production (per service)
-npm run build:marketing  # Marketing site build
-npm run build:admin     # Admin dashboard build
-npm run build:dashboard # Customer dashboard build
+npm run build:frontend  # Marketing site build
+npm run build:platform  # Customer dashboard build
 
 # Preview production builds
 npm run preview
-npm run preview:marketing
+npm run preview:frontend
 ```
 
 ### Database Operations
 ```bash
-# Setup D1 (Application Data)
-npm run db:generate      # Generate schemas from migrations
-npm run db:migrate       # Apply D1 migrations
-npm run db:seed          # Seed D1 with test data
+# Supabase Operations
+npx supabase login     # Login to Supabase
+npx supabase start     # Start local Supabase instance
+npx supabase stop      # Stop local Supabase
+npx supabase status    # Check Supabase status
+npx supabase gen types typescript --local > shared/database/types/supabase.ts  # Generate TypeScript types
 
-# Setup Supabase (Auth & Profiles)
-npm run supabase:start   # Start local Supabase
-npm run supabase:migrate # Apply Supabase migrations
-npm run supabase:types   # Generate TypeScript types
-
-# Health checks
-npm run test:supabase    # Test Supabase connection
-npm run test:connections # Test all database connections
+# Environment setup
+bash scripts/setup-env.sh  # Setup environment variables
 ```
 
 ### Deployment
@@ -65,31 +59,27 @@ npm run test:connections # Test all database connections
 npx wrangler login
 
 # Deploy individual services with OAuth
-npx wrangler deploy --env production --config ./workers/marketing/wrangler.toml
-npx wrangler deploy --env production --config ./workers/dashboard/wrangler.toml  
-npx wrangler deploy --env production --config ./workers/admin/wrangler.toml
+npx wrangler deploy --env production --config ./frontend/wrangler.toml
+npx wrangler deploy --env production --config ./platform/wrangler.toml
 
 # Deploy to preview environment
-npx wrangler deploy --env preview --config ./workers/marketing/wrangler.toml
-npx wrangler deploy --env preview --config ./workers/dashboard/wrangler.toml
-npx wrangler deploy --env preview --config ./workers/admin/wrangler.toml
+npx wrangler deploy --env preview --config ./frontend/wrangler.toml
+npx wrangler deploy --env preview --config ./platform/wrangler.toml
 
 # Local Cloudflare testing
-wrangler dev --config ./workers/marketing/wrangler.toml
-wrangler dev --config ./workers/dashboard/wrangler.toml  
-wrangler dev --config ./workers/admin/wrangler.toml
+wrangler dev --config ./frontend/wrangler.toml
+wrangler dev --config ./platform/wrangler.toml
 ```
 
 **Domain Configuration**: Workers automatically attach to domains via routes configured in wrangler.toml:
-- `www.nyuchi.com/*` → Marketing Worker
-- `dashboard.nyuchi.com/*` → Dashboard Worker  
-- `admin.nyuchi.com/*` → Admin Worker
+- `www.nyuchi.com/*` → Frontend Worker
+- `dashboard.nyuchi.com/*` → Platform Worker
 
 ### Linting & Type Checking
-The project uses ESLint and TypeScript. Always run these before committing:
 ```bash
-npx eslint . --fix      # Lint and fix issues
-npx tsc --noEmit        # Type check without compilation
+# Linting and type checking
+npx eslint .           # Run ESLint
+npx tsc --noEmit       # TypeScript type checking
 ```
 
 ## Architecture Overview
@@ -97,26 +87,19 @@ npx tsc --noEmit        # Type check without compilation
 ### Microservices Architecture (CRITICAL)
 The platform uses independent subdomain deployments as separate Cloudflare Workers:
 
-**Marketing Service** (`www.nyuchi.com`):
+**Frontend Service** (`www.nyuchi.com`):
 - Static marketing site with blog
 - Runs on port 4322 in dev
-- Independent deployment: `wrangler.toml` (main)
-- Build: `npm run build:marketing`
-- Deploy: `scripts/deploy-marketing.sh`
+- Independent deployment: `frontend/wrangler.toml`
+- Build: `npm run build:frontend`
+- Deploy: `npx wrangler deploy --config ./frontend/wrangler.toml`
 
-**Admin Service** (`admin.nyuchi.com`):
-- Internal employee dashboard
-- Runs on port 4321 in dev
-- Independent deployment: `workers/admin/wrangler.toml`
-- Build: `npm run build:admin`
-- Deploy: `scripts/deploy-admin.sh`
-
-**Customer Dashboard** (`dashboard.nyuchi.com`):
+**Platform Service** (`dashboard.nyuchi.com`):
 - Customer SaaS products (MailSense, SEO Manager, etc.)
-- Runs on port 4323 in dev
-- Independent deployment: `workers/dashboard/wrangler.toml`
-- Build: `npm run build:dashboard`  
-- Deploy: `scripts/deploy-dashboard.sh`
+- Runs on port 4321 in dev
+- Independent deployment: `platform/wrangler.toml`
+- Build: `npm run build:platform`
+- Deploy: `npx wrangler deploy --config ./platform/wrangler.toml`
 
 **Identity Service** (`identity.nyuchi.com`):
 - Supabase-managed authentication for all services
@@ -140,38 +123,22 @@ All API endpoints implement enterprise security layers:
 7. Error sanitization (no data leaks)
 
 ### Database Architecture
-- **Unified Access**: All database operations go through `database/` directory
+- **Unified Access**: All database operations go through `shared/database/` directory
 - **D1 Client**: Application data with parameterized queries and organization isolation
 - **Supabase Client**: Authentication with RLS policies and JWT verification
 - **DatabaseManager**: Singleton pattern for unified database access
 
 ### API Structure
-All APIs follow `/api/[product]/[...action].ts` pattern with catch-all routing:
-- `/api/mailsense/[...action].ts` - MailSense email management
-- `/api/analytics-pro/[...action].ts` - Analytics and tracking
-- `/api/organizations/[...action].ts` - Organization management
-- `/api/admin/[...action].ts` - Admin operations (role-protected)
+All APIs are located in `src/pages/api/` with Astro's file-based routing:
+- API endpoints follow standard REST patterns
+- Authentication and authorization handled via Supabase
+- Input validation and security implemented per endpoint
 
-### Role-Based Access Control (RBAC)
-5-tier hierarchy: `super_admin` → `admin` → `manager` → `user` → `viewer`
-
-**Key Auth Functions** (`src/lib/auth.ts`):
-- `verifyToken()` - JWT verification with Supabase
-- `requireAdmin()` - Admin access middleware
-- `requirePermission()` - Permission-based access
-- `hasRoleLevel()` - Role hierarchy checks
-
-**Permission System**:
-- Granular product permissions (e.g., `MAIL_ORGANIZER.USE`, `SEO_MANAGER.BULK_OPERATIONS`)
-- Organization-level isolation
-- Admin hierarchy restrictions
-
-### Input Validation
-Comprehensive Zod schemas in `src/lib/validation.ts`:
-- 30+ validation schemas for all data types
-- XSS prevention with `sanitizeHtml()`
-- SQL injection prevention with parameterized queries
-- File upload validation with size/type restrictions
+### Authentication & Authorization
+- **Supabase Auth**: JWT-based authentication system
+- **User Management**: Centralized user profiles and organization management
+- **Security**: Role-based access control where implemented
+- **Integration**: Seamless integration across all subdomain services
 
 ## Development Guidelines
 
@@ -181,67 +148,72 @@ Comprehensive Zod schemas in `src/lib/validation.ts`:
 3. Required variables are validated on startup
 
 ### Database Development
-- Always use the unified `database/` clients - never direct database calls
+- Always use the unified `shared/database/` clients - never direct database calls
 - D1 queries must use parameterized statements via the D1Client
 - Supabase operations should go through the admin client for server-side
 - Test database connections with `npm run test:connections`
 
-### API Development
-- All endpoints require authentication and validation
-- Use middleware functions from `auth.ts` for access control
-- Validate all inputs with Zod schemas from `validation.ts`
-- Return consistent error responses with `createCustomerError()`
+### Astro Development Patterns
+- **File-based Routing**: Pages in `src/pages/` map directly to URLs
+- **Subdomain Handling**: Use Astro.url.hostname to detect current subdomain
+- **SSR Mode**: Application runs in server-side rendering mode for dynamic content
+- **API Routes**: Create API endpoints as `.ts` files in `src/pages/api/`
+- **Component Organization**: Shared components in `core/components/`, service-specific in `src/[service]/`
 
 ### Security Requirements
-- Never log or expose sensitive data in error messages
-- All user inputs must be validated and sanitized
-- Use role-based access for all protected resources
-- Implement rate limiting for API endpoints
-- Follow CSP and security header requirements
-
-### Testing Strategy
-- Use mock tokens from `auth.ts` for development testing
-- Test with different role levels (super_admin, admin, manager, user, viewer)
-- Verify organization isolation in multi-tenant features
-- Test database health checks before production deployment
+- All API routes should implement authentication where required
+- Use Supabase Row Level Security (RLS) for database access control
+- Validate user inputs and sanitize outputs
+- Never expose sensitive data in client-side code
+- Use environment variables for all secrets and configuration
 
 ## Common Patterns
 
 ### API Endpoint Structure
 ```typescript
-// src/pages/api/[product]/[...action].ts
-import { requirePermission, createCustomerError } from '../../../lib/auth';
-import { validateRequest } from '../../../lib/validation';
-import { db } from '../../../../database';
+// src/pages/api/example.ts
+import type { APIRoute } from 'astro';
+import { createClient } from '@supabase/supabase-js';
 
-export async function POST(request: Request) {
-  // 1. Extract action from URL
-  const url = new URL(request.url);
-  const action = url.pathname.split('/').pop();
-  
-  // 2. Verify authentication & permissions
-  const user = await requirePermission(request, 'product.permission');
-  if (user instanceof Response) return user;
-  
-  // 3. Validate input
-  const body = await request.json();
-  const validation = await validateRequest(YourSchema)(body);
-  if (!validation.success) {
-    return createCustomerError(validation.error);
+export const POST: APIRoute = async ({ request }) => {
+  try {
+    // 1. Get request data
+    const body = await request.json();
+
+    // 2. Initialize Supabase client
+    const supabase = createClient(
+      import.meta.env.SUPABASE_URL,
+      import.meta.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+
+    // 3. Verify authentication
+    const token = request.headers.get('Authorization')?.replace('Bearer ', '');
+    if (token) {
+      const { data: { user }, error } = await supabase.auth.getUser(token);
+      if (error || !user) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+      }
+    }
+
+    // 4. Business logic
+    const { data, error } = await supabase
+      .from('your_table')
+      .insert(body);
+
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+
+    return new Response(JSON.stringify({ success: true, data }));
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
   }
-  
-  // 4. Business logic with database
-  const result = await db.getD1().prepare('SELECT * FROM table WHERE org_id = ?')
-    .bind(user.organizationId)
-    .all();
-  
-  return new Response(JSON.stringify({ success: true, data: result }));
-}
+};
 ```
 
 ### Database Access Pattern
 ```typescript
-import { db } from '../../database';
+import { db } from '../../shared/database';
 
 // Get database clients
 const d1 = db.getD1();
@@ -259,45 +231,71 @@ const { data, error } = await supabase
   .eq('organization_id', organizationId);
 ```
 
-## Package Structure
+### Subdomain Detection Pattern
+```typescript
+// In Astro pages or API routes
+const hostname = Astro.url.hostname;
+const subdomain = hostname.split('.')[0];
 
-- **packages/mailsense-extension/**: Chrome extension for Gmail integration
-- **packages/ui/**: Shared UI components across the platform
-- **packages/wordpress-plugin/**: SEO Manager WordPress integration
-- **packages/utils/**: Shared utilities and helpers
+switch (subdomain) {
+  case 'dashboard':
+    // Dashboard-specific logic
+    break;
+  case 'admin':
+    // Admin-specific logic
+    break;
+  case 'www':
+  case 'nyuchi':
+  default:
+    // Marketing site logic
+    break;
+}
+```
 
-## Recent Changes & Updates
+## Project Structure
 
-### Domain Configuration & OAuth Setup (Latest)
-- **OAuth Authentication**: Switched from limited API tokens to full OAuth authentication for Cloudflare deployments
-- **Domain Attachment**: Workers now automatically attach to custom domains via wrangler.toml routes configuration
-- **Zone Management**: Fixed zone_id configuration (049bd85976a3767c9bfa4aaee38fc937) for nyuchi.com domain
-- **Centralized Configuration**: Removed duplicate wrangler.toml files and cleaned up project structure
-- **Authentication Flow**: Environment-aware authentication redirects for preview vs production domains
+### Core Directories
+- **`frontend/`** - Marketing site Astro application
+  - **`src/pages/`** - Marketing site pages and routing
+  - **`src/components/`** - Marketing site components
+  - **`wrangler.toml`** - Frontend worker configuration
+- **`platform/`** - Customer dashboard Astro application
+  - **`src/pages/`** - Dashboard pages and API routes
+  - **`src/components/`** - Dashboard components
+  - **`wrangler.toml`** - Platform worker configuration
+- **`shared/`** - Shared business logic and utilities
+  - **`database/`** - Database clients, types, and configuration
+  - **`components/`** - Shared UI components
+  - **`lib/`** - Utility functions and helpers
+- **`scripts/`** - Build and deployment scripts
+
+## Configuration Files
+
+### Key Configuration Files
+- **`frontend/astro.config.mjs`** - Frontend Astro configuration
+- **`platform/astro.config.mjs`** - Platform Astro configuration
+- **`frontend/wrangler.toml`** - Frontend worker configuration
+- **`platform/wrangler.toml`** - Platform worker configuration
+- **`package.json`** - Root project dependencies and scripts
+- **`eslint.config.js`** - ESLint configuration
 
 ### Environment Configuration
-```bash
-# OAuth Login (required for domain management)
-npx wrangler login
+- **`env.example`** - Environment variable template
+- **`.env.local`** - Local environment variables (not committed)
+- Environment variables are loaded by Astro/Vite automatically
+- Supabase configuration is handled in `core/database/`
 
-# Environment Variables
-# - Removed CLOUDFLARE_API_TOKEN from .env.local (uses OAuth now)
-# - Supabase configuration centralized in /config/supabase.ts
-```
+## Deployment Architecture
 
-### Domain Setup Status
-- ✅ **Workers Deployed**: All three workers deployed with correct routes
-- ✅ **OAuth Authentication**: Full permissions for DNS management  
-- ✅ **Zone Configuration**: Correct zone_id for nyuchi.com domain
-```
+### Microservice Deployment
+- Two independent Cloudflare Workers with separate configurations
+- Frontend: `nyuchi-frontend-prod` handling www.nyuchi.com
+- Platform: `nyuchi-dashboard-prod` handling dashboard.nyuchi.com
+- Each service has its own environment configuration
+- Independent scaling and resource allocation
 
-## Important Files
-
-- `database/index.ts` - Unified database client and manager
-- `src/lib/auth.ts` - Authentication and RBAC system
-- `src/lib/validation.ts` - Input validation schemas and security utilities
-- `src/lib/security.ts` - Rate limiting and security headers
-- `astro.config.mjs` - Cloudflare adapter configuration
-- `workers/*/wrangler.toml` - Cloudflare Workers configuration per service
-- `turbo.json` - Monorepo build pipeline
-- `DOMAIN_SETUP_STATUS.md` - Current domain configuration status and next steps
+### Key Features
+- **OAuth Authentication**: Full DNS management permissions
+- **Subdomain Routing**: Intelligent routing based on hostname
+- **Environment-Specific**: Separate configurations for production and preview
+- **Resource Management**: KV, R2, and other Cloudflare resources properly configured

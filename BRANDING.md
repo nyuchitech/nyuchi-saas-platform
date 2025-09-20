@@ -155,17 +155,21 @@ background-image:
 
 ## Application Guidelines
 
-### Marketing Site (Port 4322)
+### Frontend Marketing Site (`frontend/` - Port 4322)
 - Zimbabwe flag strip always visible
 - Tech background images on key sections
 - Pill-shaped buttons throughout
 - Brand colors in badges and indicators
+- Independent Astro application
+- Deploy: `npx wrangler deploy --config ./frontend/wrangler.toml`
 
-### Dashboard Site (Port 4321)  
+### Platform Dashboard (`platform/` - Port 4321)
 - Same brand colors and button system
 - Flag strip for brand consistency
 - Focus on functionality over marketing aesthetics
 - Brand colors for status indicators and labels
+- Independent Astro application
+- Deploy: `npx wrangler deploy --config ./platform/wrangler.toml`
 
 ### Mobile Considerations
 - Flag strip remains at 8px width
@@ -199,10 +203,11 @@ background-image:
 ```
 
 ### Global Application
-- Marketing and dashboard sites share core brand CSS
+- Frontend and platform sites share core brand CSS via `shared/` directory
 - Flag strip implemented in both layout systems
 - Button classes applied consistently across platforms
 - Brand colors used for UI states and indicators
+- Shared components in `shared/components/` for consistency
 
 ---
 

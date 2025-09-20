@@ -1,367 +1,106 @@
 ---
-import MarketingLayout from '../../core/layouts/MarketingLayout.astro';
+// Dashboard landing page
 ---
 
-<MarketingLayout title="Nyuchi Africa - AI-Powered Platform Solutions for Africa">
-  <!-- Hero Section -->
-  <section class="section-hero bg-enterprise-primary">
-    <div class="content-readable">
-      <div class="hero-content pt-24 pb-16">
-        <div class="badge-zw-green mb-8 inline-flex items-center px-4 py-2 rounded-full">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          Zimbabwe Innovation Pioneer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyuchi Dashboard</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #0a0a0b;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            background: #6b46c1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #6b46c1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #6b46c1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .feature {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .feature h3 {
+            margin: 0 0 0.5rem 0;
+            color: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🚀</div>
+        <h1>Nyuchi Dashboard</h1>
+        <p>Welcome to your SaaS management platform. Monitor, manage, and optimize your business operations from one central location.</p>
+
+        <a href="/login" class="btn">Get Started</a>
+
+        <div class="features">
+            <div class="feature">
+                <h3>📧 MailSense</h3>
+                <p>AI-powered email management</p>
+            </div>
+            <div class="feature">
+                <h3>📈 SEO Manager</h3>
+                <p>Optimize your digital presence</p>
+            </div>
+            <div class="feature">
+                <h3>📊 Analytics Pro</h3>
+                <p>Business intelligence insights</p>
+            </div>
         </div>
-        
-        <h1 class="heading-hero mb-8">
-          Crafting Digital Ecosystems
-          <br />
-          <span class="text-gray-300">Driving Innovation in Africa</span>
-        </h1>
-        
-        <div class="text-body-large mb-12 mx-auto">
-          From Zimbabwe, we craft interconnected digital ecosystems that power Africa's future. Our platforms 
-          and communities drive innovation, foster connections, and build tomorrow's technology landscape today.
-        </div>
-        
-        <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-          <a href="#solutions" class="btn-marketing-primary text-lg px-8 py-4">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Explore Ecosystems
-          </a>
-          <a href="/travel-platform" class="btn-marketing-secondary text-lg px-8 py-4">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-            </svg>
-            Travel Platform
-          </a>
-        </div>
-        
-        <!-- Trust Indicators -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto opacity-90">
-          <div class="text-center">
-            <div class="text-2xl font-bold mb-1 text-white">500K+</div>
-            <div class="text-sm text-gray-400">Content Views</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold mb-1 text-white">99.9%</div>
-            <div class="text-sm text-gray-400">Platform Uptime</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold mb-1 text-white">2016</div>
-            <div class="text-sm text-gray-400">Founded in Zimbabwe</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold mb-1 text-white">5</div>
-            <div class="text-sm text-gray-400">Tech Focus Areas</div>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
-
-  <!-- Solutions Overview -->
-  <section id="solutions" class="section-content bg-enterprise-secondary">
-    <div class="content-readable">
-      <div class="section-inner mb-20">
-        <h2 class="heading-section mb-6 text-center">
-          Our <span class="text-zw-green">Projects</span>
-        </h2>
-        <div class="text-body mx-auto text-center">
-          Four interconnected projects building digital ecosystems that drive innovation across Africa
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-        <!-- Travel Information Hub -->
-        <div class="bg-enterprise-card p-8 rounded-xl group hover:scale-105 transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-zw-green rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="heading-card mb-2">Travel Information Hub</h3>
-              <div class="badge-zw-green text-xs">Live Platform</div>
-            </div>
-          </div>
-          <div class="text-muted-body mb-6">
-            Community-driven travel content platform featuring verified listings, expert reviews, and comprehensive 
-            travel information for Zimbabwe and Africa. Powers travel-info.co.zw with authentic local insights.
-          </div>
-          <div class="flex items-center justify-between mt-auto">
-            <div class="flex items-center text-gray-300 text-sm">
-              <span class="w-2 h-2 bg-zw-green rounded-full mr-2"></span>
-              Active Community Platform
-            </div>
-            <a href="/travel-platform" class="btn-nav text-xs">
-              Learn More
-            </a>
-          </div>
-        </div>
-
-        <!-- Harare Metro News -->
-        <div class="bg-enterprise-card p-8 rounded-xl group hover:scale-105 transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-zw-yellow rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="heading-card mb-2">Harare Metro News</h3>
-              <div class="badge-zw-yellow text-xs">News Aggregator</div>
-            </div>
-          </div>
-          <div class="text-muted-body mb-6">
-            Powered by ML and critical thinking, built by a Zimbabwean for Africa. Delivering curated local news 
-            for Harare metropolitan area. AI insights and queries for readers coming soon.
-          </div>
-          <div class="flex items-center justify-between mt-auto">
-            <div class="flex items-center text-gray-300 text-sm">
-              <span class="w-2 h-2 bg-zw-yellow rounded-full mr-2"></span>
-              AI News Curation
-            </div>
-            <a href="/harare-metro" class="btn-nav text-xs">
-              Learn More
-            </a>
-          </div>
-        </div>
-
-        <!-- Social Entertainment Hub -->
-        <div class="bg-enterprise-card p-8 rounded-xl group hover:scale-105 transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-zw-red rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="heading-card mb-2">Mukoko</h3>
-              <div class="badge-zw-red text-xs">Social Entertainment</div>
-            </div>
-          </div>
-          <div class="text-muted-body mb-6">
-            Community-first social entertainment platform building authentic digital communities through engaging content, 
-            social features, and entertainment experiences. Fostering genuine connections across Africa.
-          </div>
-          <div class="flex items-center justify-between mt-auto">
-            <div class="flex items-center text-gray-300 text-sm">
-              <span class="w-2 h-2 bg-zw-red rounded-full mr-2"></span>
-              Community Networks
-            </div>
-            <a href="/mukoko" class="btn-nav text-xs">
-              Learn More
-            </a>
-          </div>
-        </div>
-
-        <!-- Technology Leaders in Africa -->
-        <div class="bg-enterprise-card p-8 rounded-xl group hover:scale-105 transition-all duration-300">
-          <div class="flex items-center mb-6">
-            <div class="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center mr-4">
-              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="heading-card mb-2">Technology Leaders in Africa</h3>
-              <div class="badge-gray text-xs">Professional Network</div>
-            </div>
-          </div>
-          <div class="text-muted-body mb-6">
-            Premier professional network connecting technology leaders, innovators, and visionaries across Africa. 
-            Building bridges between expertise, fostering collaboration, and driving the continent's tech evolution.
-          </div>
-          <div class="flex items-center justify-between mt-auto">
-            <div class="flex items-center text-gray-300 text-sm">
-              <span class="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-              Leadership Network
-            </div>
-            <a href="/tla" class="btn-nav text-xs">
-              Learn More
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AIO - Key Innovation -->
-  <section class="section-content bg-enterprise-accent section-enterprise-accent">
-    <div class="content-readable">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 class="heading-section mb-6">
-            Introducing <span class="text-zw-green">Nyuchi AIO Manager</span>
-            <br />
-            <span class="text-lg text-gray-400">Artificial Intelligence Optimization Platform</span>
-          </h2>
-          
-          <div class="text-body-large mb-6">
-            Our AIO Manager represents the evolution of SEO for the AI-powered search era, transforming how content is discovered and consumed in 2025.
-          </div>
-          
-          <div class="text-body mb-8">
-            Unlike traditional SEO that focused on ranking in search results, Nyuchi AIO Manager optimizes content to be sourced by AI systems for 
-            generated answers, featured snippets, and AI-powered search experiences across platforms like Google's AI Mode and ChatGPT.
-          </div>
-          
-          <div class="flex flex-col sm:flex-row gap-4">
-            <a href="/aio-manager" class="btn-marketing-primary">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-              Learn AIO Manager
-            </a>
-            <a href="/products" class="btn-marketing-secondary">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-              All Solutions
-            </a>
-          </div>
-        </div>
-        
-        <div class="bg-enterprise-card p-8 rounded-xl">
-          <h3 class="heading-card mb-6">Key AIO Benefits</h3>
-          
-          <div class="space-y-6">
-            <div class="flex items-start">
-              <div class="w-6 h-6 bg-zw-green rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-white mb-2">AI-First Content Strategy</h4>
-                <p class="text-muted-body text-sm">Content optimized to teach AI systems, resulting in better visibility in AI-generated responses</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start">
-              <div class="w-6 h-6 bg-zw-yellow rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                <svg class="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-white mb-2">Multi-Platform Visibility</h4>
-                <p class="text-muted-body text-sm">Reach users across traditional search engines and AI-powered tools simultaneously</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start">
-              <div class="w-6 h-6 bg-zw-red rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-semibold text-white mb-2">Future-Proof Optimization</h4>
-                <p class="text-muted-body text-sm">Adapt to the evolving search landscape where AI systems increasingly mediate information discovery</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Nyuchi -->
-  <section class="section-content bg-enterprise-primary">
-    <div class="content-readable">
-      <div class="section-inner mb-20">
-        <h2 class="heading-section mb-6 text-center">
-          Why Choose <span class="text-zw-green">Nyuchi Africa</span>
-        </h2>
-        <div class="text-body mx-auto text-center">
-          Based in Zimbabwe with deep understanding of African markets and challenges
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-zw-green rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="heading-card mb-3">Proven Track Record</h3>
-          <div class="text-muted-body">
-            Successfully serving 500K+ users across multiple platforms with consistent uptime and performance
-          </div>
-        </div>
-
-        <div class="text-center">
-          <div class="w-16 h-16 bg-zw-yellow rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <h3 class="heading-card mb-3">AIO Innovation</h3>
-          <div class="text-muted-body">
-            Leading the way with Nyuchi AIO Manager and AI-powered content optimization, staying ahead of search evolution
-          </div>
-        </div>
-
-        <div class="text-center">
-          <div class="w-16 h-16 bg-zw-red rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          </div>
-          <h3 class="heading-card mb-3">Community Focus</h3>
-          <div class="text-muted-body">
-            Building authentic African digital communities with local insights and community-first approach
-          </div>
-        </div>
-
-        <div class="text-center">
-          <div class="w-16 h-16 bg-enterprise-card border border-gray-600 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-            </svg>
-          </div>
-          <h3 class="heading-card mb-3">Zimbabwe Based</h3>
-          <div class="text-muted-body">
-            Headquartered in Zimbabwe with deep understanding of African markets, challenges, and opportunities
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="section-content bg-enterprise-secondary">
-    <div class="content-readable">
-      <div class="text-center">
-        <h2 class="heading-section mb-6">
-          Ready to Transform Your <span class="text-zw-green">Digital Presence?</span>
-        </h2>
-        <div class="text-body-large mx-auto mb-12">
-          Join leading African businesses leveraging our AI-powered platform solutions 
-          to reach new audiences and drive growth.
-        </div>
-        <div class="flex flex-col sm:flex-row gap-6 justify-center">
-          <a href="/contact" class="btn-marketing-primary text-lg px-8 py-4">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            Start Your Journey
-          </a>
-          <a href="/products" class="btn-marketing-secondary text-lg px-8 py-4">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            Explore Ecosystems
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-</MarketingLayout>
+</body>
+</html>

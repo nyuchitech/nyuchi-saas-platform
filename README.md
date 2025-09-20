@@ -1,4 +1,4 @@
-# 🔒 Nyuchi Platform - Enterprise-Grade Secure SaaS
+# 🔒 Nyuchi Platform - Enterprise-Grade SaaS Dashboard
 
 <div align="center">
   <img src="https://nyuchi.com/logo.png" alt="Nyuchi Platform" width="200" />
@@ -9,6 +9,53 @@
   [![Cloudflare](https://img.shields.io/badge/Cloudflare-D1%20%7C%20Workers-F38020.svg)](https://cloudflare.com)
   [![Supabase](https://img.shields.io/badge/Supabase-Auth%20%7C%20Profiles-00C88D.svg)](https://supabase.com)
 </div>
+
+## 📁 Project Structure
+
+The Nyuchi Platform has been separated into focused repositories:
+
+### 🚀 `platform/` (This Repository)
+SaaS dashboard and platform functionality
+- **Purpose**: Customer dashboards, admin panels, SaaS features, backend API
+- **Tech Stack**: Astro, Tailwind CSS, Cloudflare Workers, Supabase
+- **Commands**:
+  - `npm run dev` - Start development server (localhost:4321)
+  - `npm run build` - Build for production
+  - `npm run deploy` - Deploy to Cloudflare
+
+### 🌐 Frontend (Separate Repository)
+Marketing website and public-facing content
+- **Repository**: [nyuchi-frontend](https://github.com/bryanfawcett/nyuchi-frontend)
+- **Purpose**: Landing pages, blog, marketing site
+- **Tech Stack**: Astro, Nyuchi Design System, Cloudflare Workers
+  - `npm run dev:platform` - Start development server
+  - `npm run build:platform` - Build for production
+  - `npm run deploy:platform` - Deploy to Cloudflare
+
+### 🔗 `shared/`
+Common functionality and shared resources
+- **Purpose**: Database models, authentication, utilities, components
+- **Contents**: API clients, auth logic, database schemas, shared UI components
+- **Tech Stack**: TypeScript, Zod, Supabase types
+
+## 🚀 Quick Start
+
+```bash
+# Install all dependencies
+npm run install:all
+
+# Start frontend development
+npm run dev:frontend
+
+# Start platform development
+npm run dev:platform
+
+# Build everything
+npm run build
+
+# Deploy everything
+npm run deploy
+```
 
 ## 🚀 Overview
 

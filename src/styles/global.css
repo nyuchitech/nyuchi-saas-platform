@@ -1,0 +1,649 @@
+/*
+ * Nyuchi Design System v1.0
+ * Inspired by AWS design patterns with custom Nyuchi branding
+ * Built for dashboard.nyuchi.com and platform consistency
+ */
+
+/* Tailwind CSS base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ================================ */
+
+:root {
+  /* Primary Nyuchi Brand Colors */
+  --nyuchi-primary: #FF6B35;        /* Nyuchi Orange */
+  --nyuchi-primary-dark: #E55A2B;   /* Darker Orange */
+  --nyuchi-primary-light: #FF8A5B;  /* Lighter Orange */
+  
+  /* AWS-Inspired Neutrals */
+  --nyuchi-dark: #232F3E;           /* AWS Dark Blue */
+  --nyuchi-dark-secondary: #37475A; /* Lighter AWS Blue */
+  --nyuchi-light: #FAFAFA;          /* AWS Light Gray */
+  --nyuchi-border: #D5D9DD;         /* AWS Border Gray */
+  
+  /* Semantic Colors */
+  --success: #16A085;               /* Teal Success */
+  --warning: #F39C12;               /* Orange Warning */
+  --error: #E74C3C;                 /* Red Error */
+  --info: #3498DB;                  /* Blue Info */
+  
+  /* Text Colors */
+  --text-primary: #0F1111;          /* AWS Dark Text */
+  --text-secondary: #565656;        /* AWS Gray Text */
+  --text-muted: #6C7B7F;           /* AWS Muted Text */
+  --text-inverse: #FFFFFF;          /* White Text */
+  
+  /* Background Colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F7F8FA;
+  --bg-tertiary: #EAEDED;
+  --bg-dark: var(--nyuchi-dark);
+  
+  /* Spacing Scale (AWS-inspired) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  
+  /* Typography Scale */
+  --font-family-primary: 'Amazon Ember', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono: 'Amazon Ember Mono', 'Courier New', monospace;
+  
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 48px;
+  
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* Shadows (AWS-inspired) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* ================================
+   2. RESET & BASE STYLES
+   ================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: var(--line-height-normal);
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+  h1, h2, h3, h4, h5, h6, .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+  }
+  
+  /* Body text uses Roboto */
+  p, span, div, a {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-medium);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--border-light);
+  }
+}
+
+/* Nyuchi Africa Brand Components */
+@layer components {
+  /* Zimbabwe Flag Strip - Brand Element */
+  .zimbabwe-flag-strip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .zimbabwe-flag-strip::before {
+    content: '';
+    flex: 1;
+    background: linear-gradient(
+      to bottom,
+      var(--zw-green) 0% 25%,
+      var(--zw-yellow) 25% 50%,
+      var(--zw-red) 50% 75%,
+      var(--zw-black) 75% 100%
+    );
+  }
+
+  /* Container Classes */
+  .container-nyuchi {
+    max-width: 1280px; /* max-w-7xl */
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Button System - All pill-shaped */
+  .btn-base {
+    border-radius: 9999px; /* rounded-full */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  
+  /* Large - Hero sections, primary CTAs */
+  .btn-marketing-primary {
+    @apply btn-base;
+    padding: 1rem 2rem; /* px-8 py-4 */
+    font-size: 1.125rem; /* text-lg */
+    background-color: var(--zw-white);
+    color: var(--zw-black);
+    border-color: var(--zw-white);
+  }
+  
+  .btn-marketing-primary:hover {
+    background-color: transparent;
+    color: var(--zw-white);
+    border-color: var(--zw-white);
+  }
+  
+  .btn-marketing-secondary {
+    @apply btn-base;
+    padding: 1rem 2rem; /* px-8 py-4 */
+    font-size: 1.125rem; /* text-lg */
+    background-color: transparent;
+    color: var(--zw-white);
+    border-color: var(--zw-white);
+  }
+  
+  .btn-marketing-secondary:hover {
+    background-color: var(--zw-white);
+    color: var(--zw-black);
+  }
+  
+  /* Medium - Footer, secondary actions */
+  .btn-footer {
+    @apply btn-base;
+    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    font-size: 1rem; /* text-base */
+    background-color: var(--zw-white);
+    color: var(--zw-black);
+  }
+  
+  .btn-footer-secondary {
+    @apply btn-base;
+    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    font-size: 1rem; /* text-base */
+    background-color: transparent;
+    color: var(--zw-white);
+    border-color: var(--zw-white);
+  }
+  
+  /* Small - Navigation, compact spaces */
+  .btn-nav {
+    @apply btn-base;
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    font-size: 0.875rem; /* text-sm */
+    background-color: var(--zw-white);
+    color: var(--zw-black);
+  }
+  
+  .btn-nav-secondary {
+    @apply btn-base;
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    font-size: 0.875rem; /* text-sm */
+    background-color: transparent;
+    color: var(--zw-white);
+    border-color: var(--zw-white);
+  }
+
+  /* Card Components - Brand Guidelines */
+  .card-nyuchi {
+    background-color: var(--bg-card-dark); /* bg-gray-800/50 */
+    border: 1px solid var(--border-card); /* border-gray-700 */
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 2rem; /* p-8 */
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+  
+  .card-nyuchi:hover {
+    background-color: rgba(156, 163, 175, 0.6); /* Slight intensification */
+  }
+  
+  .card-white {
+    background-color: var(--bg-card);
+    color: var(--text-dark);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Hero Section - Nyuchi Brand */
+  .hero-nyuchi {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 8rem 0 10rem; /* py-32 lg:py-40 */
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 1280px; /* max-w-7xl */
+    margin: 0 auto;
+  }
+
+  /* Typography Hierarchy - Enterprise Readable */
+  .heading-hero {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Smaller, more readable */
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .heading-section {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.5rem); /* More readable size */
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+  
+  .heading-card {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    line-height: 1.4;
+  }
+  
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+
+  .text-body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.125rem; /* More readable size */
+    line-height: 1.8;
+    color: rgba(229, 231, 235, 1); /* Better contrast */
+    font-weight: 400;
+    max-width: 65ch; /* Optimal reading width */
+  }
+  
+  .text-body-large {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgba(243, 244, 246, 1);
+    font-weight: 400;
+    max-width: 60ch;
+  }
+
+  .text-muted-body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(209, 213, 219, 1); /* Better readability */
+    font-weight: 400;
+    max-width: 70ch;
+  }
+
+  /* Grid Layouts - Clean & Consistent */
+  .grid-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+
+  .grid-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  /* Section Layouts - Brand Spacing */
+  .section-hero {
+    padding: 8rem 0 10rem; /* py-32 lg:py-40 */
+    position: relative;
+  }
+  
+  .section-content {
+    padding: 6rem 0 8rem; /* py-24 lg:py-32 */
+    position: relative;
+  }
+  
+  .section-compact {
+    padding: 4rem 0 6rem; /* py-16 lg:py-24 */
+    position: relative;
+  }
+
+  .section-inner {
+    text-align: center;
+    max-width: 1280px; /* max-w-7xl */
+    margin: 0 auto;
+  }
+
+  /* Navigation - Nyuchi Brand */
+  .nav-nyuchi {
+    position: fixed;
+    top: 0;
+    left: 8px; /* Account for Zimbabwe flag strip */
+    right: 0;
+    z-index: 900; /* Below flag strip */
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem 0;
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px; /* max-w-7xl */
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  /* Form Elements - Nyuchi Brand */
+  .input-nyuchi {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-medium);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    color: var(--text-primary);
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .input-nyuchi:focus {
+    outline: none;
+    border-color: var(--zw-white);
+    background-color: var(--bg-tertiary);
+  }
+
+  .input-nyuchi::placeholder {
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  /* Stats Components - Nyuchi Brand */
+  .stat-item {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .stat-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+  
+  /* Brand Color Badges */
+  .badge-zw-green {
+    background-color: var(--zw-green);
+    color: var(--zw-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .badge-zw-yellow {
+    background-color: var(--zw-yellow);
+    color: var(--zw-black);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .badge-zw-red {
+    background-color: var(--zw-red);
+    color: var(--zw-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .badge-zw-black {
+    background-color: var(--zw-black);
+    color: var(--zw-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--border-medium);
+  }
+  
+  .badge-gray {
+    background-color: #6b7280;
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid #9ca3af;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container-nyuchi {
+      padding: 0 1rem;
+    }
+    
+    .hero-nyuchi {
+      padding: 4rem 0 6rem; /* Reduced from desktop */
+      min-height: 80vh;
+    }
+    
+    .section-content {
+      padding: 4rem 0 6rem;
+    }
+    
+    .section-compact {
+      padding: 3rem 0 4rem;
+    }
+    
+    .grid-features {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .nav-content {
+      padding: 0 1rem;
+    }
+    
+    .nav-links {
+      gap: 1rem;
+    }
+    
+    .zimbabwe-flag-strip {
+      width: 6px; /* Slightly smaller on mobile */
+    }
+    
+    .nav-nyuchi {
+      left: 6px; /* Adjust for smaller flag strip */
+    }
+  }
+}
+
+/* Brand Utility Classes */
+@layer utilities {
+  /* Enterprise section styling - clean and readable */
+  .section-enterprise {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .section-enterprise-accent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--zw-green), var(--zw-yellow));
+  }
+  
+  .content-readable {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    line-height: 1.7;
+  }
+  
+  /* Brand Color Utilities */
+  .bg-zw-green { background-color: var(--zw-green); }
+  .bg-zw-yellow { background-color: var(--zw-yellow); }
+  .bg-zw-red { background-color: var(--zw-red); }
+  .bg-zw-black { background-color: var(--zw-black); }
+  .bg-zw-white { background-color: var(--zw-white); }
+  
+  .text-zw-green { color: var(--zw-green); }
+  .text-zw-yellow { color: var(--zw-yellow); }
+  .text-zw-red { color: var(--zw-red); }
+  .text-zw-black { color: var(--zw-black); }
+  .text-zw-white { color: var(--zw-white); }
+  
+  .border-zw-green { border-color: var(--zw-green); }
+  .border-zw-yellow { border-color: var(--zw-yellow); }
+  .border-zw-red { border-color: var(--zw-red); }
+  .border-zw-black { border-color: var(--zw-black); }
+  .border-zw-white { border-color: var(--zw-white); }
+  
+  .backdrop-blur-nyuchi {
+    backdrop-filter: blur(20px);
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Spacing utilities for brand consistency */
+  .gap-brand { gap: 2rem; } /* gap-8 */
+  .gap-brand-lg { gap: 3rem; } /* gap-12 */
+  
+  /* Clean enterprise backgrounds - no heavy images */
+  .bg-enterprise-primary {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+  }
+  
+  .bg-enterprise-secondary {
+    background: linear-gradient(135deg, #0a0a0a 0%, #111111 100%);
+  }
+  
+  .bg-enterprise-accent {
+    background: linear-gradient(135deg, rgba(0, 166, 81, 0.05) 0%, rgba(0, 0, 0, 1) 100%);
+    border: 1px solid rgba(0, 166, 81, 0.1);
+  }
+  
+  .bg-enterprise-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .bg-enterprise-subtle {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
+  }
+}
